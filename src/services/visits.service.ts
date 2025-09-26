@@ -1,7 +1,7 @@
 import knex from "../config/knex"
 import httpAssert from "http-assert"
-import VisitModel from "../models/visit.model"
-import UrlModel from "../models/url.model"
+import * as VisitModel from "../models/visit.model"
+import * as UrlModel from "../models/url.model"
 
 export async function registerVisit(url_id: string, ip: string) {
   return VisitModel.registerVisit(url_id, ip)

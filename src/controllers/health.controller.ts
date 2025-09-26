@@ -1,10 +1,11 @@
 import type { RouterContext } from "@koa/router"
-import { onDatabaseConnected } from "../config/knex"
+import * as healthService from "../services/health.service"
 
 export async function healthCheck(ctx: RouterContext) {
-  ctx.body = await onDatabaseConnected() ? { status: "ok" } : { status: "error" }
+  ctx.body = await healthService.checkDatabaseConnection()
+  ctx.status = await healthService.checkDatabaseHealth()
 }
 
 export async function healthHead(ctx: RouterContext) {
-  ctx.status = await onDatabaseConnected() ? 200 : 500
+  ctx.status = await healthService.checkDatabaseHealth()
 } 

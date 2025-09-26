@@ -3,7 +3,7 @@ import knex from "../config/knex"
 import { comparePassword, hashPassword } from "../config/encryption"
 import { generateToken } from "../config/jwt"
 import { isString } from "xtitan-typeis"
-import UserModel from "../models/user.model"
+import * as UserModel from "../models/user.model"
 
 export async function login(
   username: string,

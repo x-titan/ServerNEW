@@ -1,6 +1,6 @@
 import httpAssert from "http-assert"
 import knex from "../config/knex"
-import UrlModel from "../models/url.model"
+import * as UrlModel from "../models/url.model"
 
 export async function createShortURL(
   url: string,
