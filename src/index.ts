@@ -39,4 +39,4 @@ async function main(args?: string[]) {
 }
 
 main()
-  .catch((err) => console.error("Fatal error: ", err))
+  .catch((error) => console.error("Fatal error: ", error))

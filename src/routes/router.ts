@@ -1,9 +1,9 @@
 import Router from "@koa/router"
-import authRouter from "./auth.route"
-import urlsRouter from "./urls.route"
-import visitsRouter from "./visits.route"
-import healthRouter from "./health.route"
-import requireAuthHandler from "../middlewares/requireAuthHandler"
+import authRouter from "./auth.router"
+import urlsRouter from "./urls.router"
+import visitsRouter from "./visits.router"
+import healthRouter from "./health.router"
+import requireAuth from "../middleware/requireAuth"
 
 const router = new Router()
 
@@ -15,7 +15,7 @@ router
   )
   .use(
     "/urls",
-    requireAuthHandler,
+    requireAuth,
     urlsRouter.routes(),
     urlsRouter.allowedMethods()
   )
