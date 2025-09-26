@@ -1,80 +1,76 @@
 import httpAssert from "http-assert"
 import knex from "../config/knex"
+import UrlModel from "../models/url.model"
 
 export async function createShortURL(
-  body: { url: string, id?: string },
-  user_id: number
+  url: string,
+  user_id: number,
+  url_id?: string
 ) {
-  httpAssert(body.url, 400, "URL is required")
+  httpAssert(url, 400, "URL is required")
 
-  if (body.id) {
-    var current_record = await knex("urls")
-      .where({ id: body.id })
-      .first()
+  if (url_id)
+    httpAssert(
+      !(await UrlModel.findById(url_id)),
+      409, "The ID that you provided already exists in our database"
+    )
 
-    httpAssert(!current_record, 409, "The ID that you provided already exists in our database")
-  }
-  httpAssert(/^https?:\/\/.+$/.test(body.url), 400, "URL must start with http:// or https://")
+  httpAssert(
+    /^https?:\/\/.+$/.test(url),
+    400, "URL must start with http:// or https://"
+  )
 
-  return (await knex("urls")
-    .insert({
-      url: body.url,
-      id: body.id as any,
-      user_id,
-    }, "*"))[0]
+  return UrlModel.createUrl(url, user_id, url_id)
 }
 
 export async function resolveURL(id: string) {
-  var url = await knex("urls")
-    .where({ id })
-    .select(["url"])
-    .first()
-
+  var url = await UrlModel.findById(id)
   httpAssert(url, 404, "URL not found")
 
   return url.url
 }
 
 export async function updateURL(
-  id: string,
-  body: { url: string },
+  url_id: string,
+  url: string,
   user_id: number
 ) {
-  httpAssert(body.url, 400, "URL is required")
+  httpAssert(url, 400, "URL is required")
 
-  var url = await knex("urls")
-    .where({ id })
-    .select(["user_id"])
-    .first()
+  const existingUrl = await UrlModel.findById(url_id)
 
-  httpAssert(url, 404, "URL not found")
-  httpAssert(url.user_id === user_id, 401,
-    "You don't have permissions to update this URL")
+  httpAssert(
+    existingUrl,
+    404, "URL not found"
+  )
+  httpAssert(
+    existingUrl.user_id === user_id,
+    401, "You don't have permissions to update this URL"
+  )
 
-  return knex("urls")
-    .where({ id })
-    .update({ url: body.url }, "*")
-    .first()
+  return UrlModel.updateUrl(url_id, url)
 }
 
-export async function deleteURL(id: string, user_id: number) {
-  var url = await knex("urls")
-    .where({ id })
-    .select(["user_id"])
-    .first()
+export async function deleteURL(url_id: string, user_id: number) {
+  const existingUrl = await UrlModel.findById(url_id)
 
-  httpAssert(url, 404, "URL is not found")
-  httpAssert(url.user_id === user_id, 401,
-    "You don't have permissions to update this URL")
+  httpAssert(
+    existingUrl,
+    404, "URL not found"
+  )
+  httpAssert(
+    existingUrl.user_id === user_id,
+    401, "You don't have permissions to delete this URL"
+  )
 
-  const deletedCount = await knex("urls")
-    .where({ id })
-    .delete()
-
-  return deletedCount > 0
+  return await UrlModel.deleteUrl(url_id) > 0
 }
 
 export async function getURLS(user_id: number, limit: number = 10, offset: number = 0) {
+
+  return UrlModel.getUrls(user_id, limit, offset)
+
+  // Enhanced version with visit counts
   return knex("urls")
     .where({ user_id })
     .leftJoin("visits", "urls.id", "visits.url_id")

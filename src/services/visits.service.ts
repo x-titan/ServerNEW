@@ -1,12 +1,10 @@
 import knex from "../config/knex"
 import httpAssert from "http-assert"
+import VisitModel from "../models/visit.model"
+import UrlModel from "../models/url.model"
 
 export async function registerVisit(url_id: string, ip: string) {
-  return knex("visits")
-    .insert({
-      url_id,
-      ip,
-    })
+  return VisitModel.registerVisit(url_id, ip)
 }
 
 export async function getLastVisit(
@@ -14,6 +12,9 @@ export async function getLastVisit(
   limit: number = 10,
   offset: number = 0
 ) {
+  return VisitModel.getLastVisit(url_id, limit, offset)
+
+  // Enhanced version with URL join
   return knex("visits")
     .join(
       "urls",
@@ -38,18 +39,12 @@ export async function getVisitByURL(
   limit = 10,
   offset = 0
 ) {
-  const url = await knex("urls")
-    .where({ id: url_id })
-    .select(["user_id"])
-    .first()
-
+  const url = await UrlModel.findById(url_id)
   httpAssert(url, 404, "URL not found")
-  httpAssert(url.user_id === user_id, 401,
-    "You don't have permissions to view visits for this URL")
+  httpAssert(
+    url.user_id === user_id,
+    401, "You don't have permissions to view visits for this URL"
+  )
 
-  return knex("visits")
-    .where({ url_id })
-    .limit(limit)
-    .offset(offset)
-    .orderBy("created_at", "desc")
+  return VisitModel.getVisitByURL(url_id, limit, offset)
 }

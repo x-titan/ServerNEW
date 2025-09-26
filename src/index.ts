@@ -1,5 +1,5 @@
 import "dotenv/config"
-import knex, { onDatabaseConnected } from "./config/knex"
+import { onDatabaseConnected } from "./config/knex"
 import Koa from "koa"
 import cors from "@koa/cors"
 import helmet from "koa-helmet"
@@ -38,5 +38,5 @@ async function main(args?: string[]) {
   })
 }
 
-main()
+main(process.argv)
   .catch((error) => console.error("Fatal error: ", error))

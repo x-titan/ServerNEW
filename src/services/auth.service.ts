@@ -3,61 +3,42 @@ import knex from "../config/knex"
 import { comparePassword, hashPassword } from "../config/encryption"
 import { generateToken } from "../config/jwt"
 import { isString } from "xtitan-typeis"
+import UserModel from "../models/user.model"
 
-async function getUser(username: string) {
-  return knex("users")
-    .whereRaw(`LOWER(username) = LOWER(?)`, [username])
-    .first()
-}
-
-export async function login(body: {
+export async function login(
   username: string,
   password: string
-}) {
-  httpAssert(validateUsername(body.username), 400,
+) {
+  httpAssert(validateUsername(username), 400,
     "Username must be 3-30 characters long and can only contain letters, numbers, and underscores")
 
-  httpAssert(validatePassword(body.password), 400,
+  httpAssert(validatePassword(password), 400,
     "Password must be at least 8 characters long and contain at least one uppercase letter, one number, and one special character")
 
-  const user = await getUser(body.username)
+  const user = await UserModel.findByUsername(username)
 
   httpAssert(user, 404, "User not found")
   httpAssert(
-    await comparePassword(body.password, user.password),
+    await comparePassword(password, user.password),
     401, "Invalid password"
   )
-  const token = await generateToken({ id: user.id })
 
-  return {
-    user: {
-      id: user.id,
-      username: user.username,
-      created_at: user.created_at,
-      updated_at: user.updated_at
-    },
-    token,
-  }
+  return generateToken({ id: user.id })
 }
 
-export async function register(body: {
+export async function register(
   username: string,
   password: string
-}) {
-  httpAssert(validateUsername(body.username), 400,
+) {
+  httpAssert(validateUsername(username), 400,
     "Username must be 3-30 characters long and can only contain letters, numbers, and underscores")
-  httpAssert(validatePassword(body.password), 400,
+  httpAssert(validatePassword(password), 400,
     "Password must be at least 8 characters long and contain at least one uppercase letter, one number, and one special character")
 
-  const currend_user = await getUser(body.username)
+  const currend_user = await UserModel.findByUsername(username)
+  httpAssert(!currend_user, 409, `User "${username}" is already exists`)
 
-  httpAssert(!currend_user, 409, `User "${body.username}" is already exists`)
-  const results = await knex("users")
-    .insert({
-      username: body.username.toLowerCase(),
-      password: await hashPassword(body.password),
-    }, ["username", "id"])
-  return results[0]
+  return UserModel.createUser(username, await hashPassword(password))
 }
 
 export function validateUsername(username: string) {
