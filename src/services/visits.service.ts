@@ -12,7 +12,7 @@ export async function getLastVisit(
   limit: number = 10,
   offset: number = 0
 ) {
-  return VisitModel.getLastVisit(url_id, limit, offset)
+  return VisitModel.getVisitByURL(url_id, limit, offset)
 
   // Enhanced version with URL join
   return knex("visits")

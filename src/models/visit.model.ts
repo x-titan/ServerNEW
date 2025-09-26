@@ -1,5 +1,6 @@
 import knex from "../config/knex"
 import type Visit from "../types/visit"
+import firstRow from "../utils/firstrow"
 
 export async function registerVisit(
   url_id: string,
@@ -10,19 +11,7 @@ export async function registerVisit(
       url_id,
       ip,
     }, "*")
-    .then((rows) => rows[0])
-}
-
-export async function getLastVisit(
-  url_id: string,
-  limit: number = 10,
-  offset: number = 0
-): Promise<Visit[]> {
-  return knex("visits")
-    .where({ url_id })
-    .limit(limit)
-    .offset(offset)
-    .orderBy("created_at", "desc")
+    .then(firstRow)
 }
 
 export async function getVisitByURL(

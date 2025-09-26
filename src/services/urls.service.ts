@@ -63,7 +63,12 @@ export async function deleteURL(url_id: string, user_id: number) {
     401, "You don't have permissions to delete this URL"
   )
 
-  return await UrlModel.deleteUrl(url_id) > 0
+  httpAssert(
+    await UrlModel.deleteUrl(url_id) > 0,
+    404, "URL not found or already deleted"
+  )
+
+  return { message: "URL deleted successfully" }
 }
 
 export async function getURLS(user_id: number, limit: number = 10, offset: number = 0) {
