@@ -1,16 +1,41 @@
 import "dotenv/config"
 import knex, { onDatabaseConnected } from "./config/knex"
-import trytocatch from "try-to-catch"
-import { register } from "./services/user"
+import Koa from "koa"
+import cors from "@koa/cors"
+import helmet from "koa-helmet"
+import bodyParser from "koa-bodyparser"
+import router from "./routes/router"
+import serve from "koa-static"
+import logger from "koa-logger"
+import path from "path"
 
-async function main(args?: string) {
+const app = new Koa()
+const PORT = process.env.PORT || 3000
+
+app
+  .use(logger())
+  .use(cors())
+  .use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "https://x-titan.github.io"],
+      },
+    },
+  }))
+  .use(bodyParser())
+  .use(router.routes())
+  .use(router.allowedMethods())
+  .use(serve(
+    path.join(__dirname, "../public")
+  ))
+
+async function main(args?: string[]) {
   await onDatabaseConnected()
   console.log("DataBase Connected Successfully")
-  await register({
-    username: "admin1",
-    password: "Admin@1234"
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`)
   })
-  console.log("123")
 }
 
 main()
