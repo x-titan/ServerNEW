@@ -1,38 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="script-src 'self' https://x-titan.github.io;"
+    />
+    <link rel="stylesheet" href="https://x-titan.github.io/base/index.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.svg" type="image/svg+xml">
+    <title>WOW</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://x-titan.github.io;">
-  <link rel="stylesheet" href="https://x-titan.github.io/base/index.css">
-  <link rel="stylesheet" href="./style.css">
-  <title>WOW</title>
-</head>
+  <body>
+    <h1>Hello world</h1>
+    <main>
+      <h2>Urls</h2>
+      <input type="username" id="username" placeholder="Enter username" />
+      <input type="password" id="password" placeholder="Enter password" />
+      <button type="submit" id="register">register</button>
+      <button type="submit" id="login">login</button>
+      <p id="msg">Not logined</p>
 
-<body>
-  <h1>Hello world</h1>
-  <main>
-    <h2>Urls</h2>
-    <input type="username" id="username" placeholder="Enter username">
-    <input type="password" id="password" placeholder="Enter password">
-    <button type="submit" id="register">register</button>
-    <button type="submit" id="login">login</button>
-    <p id="msg">Not logined</p>
+      <br />
+      <input type="text" id="url" placeholder="Enter URL" />
+      <button type="submit" id="shorten">Shorten URL</button>
+      <p id="result"></p>
+      <br />
 
-    <br>
-    <input type="text" id="url" placeholder="Enter URL">
-    <button type="submit" id="shorten">Shorten URL</button>
-    <p id="result"></p>
-    <br>
-    
-    <h2>History</h2>
-    <button type="submit" id="getHistory">Get History</button>
-    <ul id="history"></ul>
-  </main>
-  <script type="module" src="https://x-titan.github.io/utils/index.js"></script>
-  <script type="module" src="https://x-titan.github.io/web-utils/index.js"></script>
-  <script type="module" src="./index.js"></script>
-</body>
-
+      <h2>History</h2>
+      <button type="submit" id="getHistory">Get History</button>
+      <ul id="history"></ul>
+    </main>
+    <script
+      type="module"
+      src="https://x-titan.github.io/utils/index.js"
+    ></script>
+    <script
+      type="module"
+      src="https://x-titan.github.io/web-utils/index.js"
+    ></script>
+    <script type="module" src="./index.js"></script>
+  </body>
 </html>
