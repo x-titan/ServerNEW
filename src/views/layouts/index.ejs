@@ -8,8 +8,10 @@
   <title><%- title || "Aset" %></title>
 </head>
 
-<body>
-  <div hero></div>
+<body bottom-header>
+  <% if (typeof main !== 'undefined' && main) { %>
+  <%- main %>
+  <% } %>
   <%- include("header") %>
   <div id="app">
     <%- body || "" %>
