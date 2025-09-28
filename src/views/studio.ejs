@@ -1,0 +1,85 @@
+<% main = include("templates/hero", {
+  hero_name: "Studio",
+  hero_desc: "Aset Telmanov"
+}) %>
+
+<% main += include("templates/hero", {
+  hero_name: "Project<br>Name",
+  hero_desc: "03 Website<br>Design"
+}) %>
+
+<%-
+include("templates/titled-section", {
+section_title: `<h1>Introduction</h1>`,
+fit: true,
+section_content: `
+<h5>
+  <p>
+    Hello, I'm Aset, your guide in the realm of web development and computer workshops.
+  </p>
+  <br />
+  <p>
+    I don't just create websites – I bring ideas to life in interactive and creative online spaces.
+  </p>
+  <br />
+  <p>
+    My experience includes the development of unique and responsive websites that are not only visually appealing but also effective in achieving the client's goals.
+  </p>
+  <br />
+  <p>
+    Whether it's a personal website, an e-commerce platform, or a corporate portal – I'm here to make your project stand out.
+  </p>
+</h5>
+`
+}) %>
+
+<%- 
+include("templates/titled-section", {
+section_title: `<h1>Works <br /> Overview</h1>`,
+section_content: include("templates/container-2x2", {
+box1: include("templates/card",{
+  card_content: `<img card src="" alt="">`,
+  card_name: "Project1"
+}),
+box2: include("templates/card",{
+  card_content: `<img card src="" alt="">`,
+  card_name: "Project2"
+}),
+box3: include("templates/card",{
+  card_content: `<img card src="" alt="">`,
+  card_name: "Project3"
+}),
+box4: include("templates/card",{
+  card_content: `<img card src="" alt="">`,
+  card_name: "Project4"
+})
+})
+}) %>
+
+<%-
+include("templates/container-3x2", {
+box1: include("templates/card",{
+  card_content: `<img card src="" alt="">`,
+  card_name: "Project1"
+}),
+box2: include("templates/card",{
+  card_content: `<img card src="" alt="">`,
+  card_name: "Project2"
+}),
+box3: include("templates/card",{
+  card_content: `<img card src="" alt="">`,
+  card_name: "Project3"
+}),
+box4: include("templates/card",{
+  card_content: `<img card src="" alt="">`,
+  card_name: "Project4"
+}),
+box5: include("templates/card",{
+  card_content: `<img card src="" alt="">`,
+  card_name: "Project5"
+}),
+box6: include("templates/card",{
+  card_content: `<img card src="" alt="">`,
+  card_name: "Project6"
+}),
+}) %>

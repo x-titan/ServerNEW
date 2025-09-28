@@ -1,12 +1,12 @@
 import Router from "@koa/router"
-import * as urlsController from "../controllers/urls.controller"
+import * as urls from "../controllers/urls.controller"
 
 const router = new Router()
 
 router
-  .post("/", urlsController.createShortURL)
-  .post("/shorter", urlsController.createShortURL)
-  .get("/get/:code", urlsController.resolveURL)
-  .post("/all", urlsController.getURLS)
+  .post("/", urls.createShortURL)
+  .post("/shorter", urls.createShortURL)
+  .get("/get/:code", urls.resolveURL)
+  .post("/all", urls.getURLS)
 
 export default router

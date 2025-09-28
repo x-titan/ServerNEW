@@ -1,10 +1,10 @@
 import Router from "@koa/router"
-import * as healthController from "../controllers/health.controller"
+import * as health from "../controllers/health.controller"
 
 const healthRouter = new Router()
 
 healthRouter
-  .get("/", healthController.healthCheck)
-  .head("/", healthController.healthHead)
+  .get("/", health.check)
+  .head("/", health.checkHead)
 
 export default healthRouter

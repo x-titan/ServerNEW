@@ -1,33 +1,45 @@
 import Router from "@koa/router"
-import authRouter from "./auth.router"
-import urlsRouter from "./urls.router"
-import visitsRouter from "./visits.router"
-import healthRouter from "./health.router"
+import auth from "./auth.router"
+import urls from "./urls.router"
+import visits from "./visits.router"
+import health from "./health.router"
+import hello from "./hello.router"
+import studio from "./studio.router"
 import requireAuth from "../middleware/requireAuth"
 
 const router = new Router()
 
 router
   .use(
+    "/studio",
+    studio.routes(),
+    studio.allowedMethods()
+  )
+  .use(
     "/auth",
-    authRouter.routes(),
-    authRouter.allowedMethods()
+    auth.routes(),
+    auth.allowedMethods()
   )
   .use(
     "/urls",
     requireAuth,
-    urlsRouter.routes(),
-    urlsRouter.allowedMethods()
+    urls.routes(),
+    urls.allowedMethods()
   )
   .use(
     "/visits",
-    visitsRouter.routes(),
-    visitsRouter.allowedMethods()
+    visits.routes(),
+    visits.allowedMethods()
   )
   .use(
     "/health",
-    healthRouter.routes(),
-    healthRouter.allowedMethods()
+    health.routes(),
+    health.allowedMethods()
+  )
+  .use(
+    "/hello",
+    hello.routes(),
+    hello.allowedMethods()
   )
 
 export default router
