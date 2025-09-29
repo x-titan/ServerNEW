@@ -14,6 +14,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 ::-webkit-scrollbar-corner {
@@ -51,9 +52,6 @@ body {
   position: relative;
   height: 100%;
   width: 100%;
-  /* display: flex; */
-  flex-direction: column;
-  height: 100%;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   overflow-y: scroll;
@@ -106,10 +104,25 @@ h6 {
   font-size: 1.1em;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#app a {
+  text-decoration: underline;
+
+}
+
+a:hover {
+  color: rgb(211, 38, 38);
+}
+
 #app {
   height: 100%;
-  /* max-height: calc(100% - 32px); */
   position: relative;
+  overflow-y: visible;
+  overflow-x: unset;
 }
 
 body>*:not(#app, header) {
@@ -159,10 +172,16 @@ header {
   height: 32px;
   overflow: hidden;
   mix-blend-mode: difference;
-  color: #fff;
+  background-color: #fff;
   z-index: 99;
+}
+
+[header-section] {
   padding-left: 0.5em;
   padding-right: 0.5em;
+  mix-blend-mode: difference;
+  background-color: #fff;
+  color: #000;
 }
 
 [header-grid] {
@@ -417,11 +436,12 @@ footer {
   }
 }
 
-/** CONTAINER BOX IMAGE */
+/** IMAGE */
 
-[container-box] img {
+img {
+  height: 100%;
+  width: 100%;
   display: block;
-  flex: 1;
   object-fit: cover;
 }
 
@@ -433,6 +453,7 @@ footer {
   flex-direction: column;
   width: 100%;
   height: 100%;
+  border-radius: 1em;
 }
 
 [card-content] {
@@ -463,4 +484,41 @@ footer {
   color: #495057;
   /* white-space: pre-wrap;  */
   /* word-break: break-word;  */
+}
+
+/** CAROUSEL */
+
+[carousel] {
+  height: 100%;
+  max-height: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+[carousel] [carousel-scroll-x][flex] {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  align-self: flex-end;
+  --scrollbar-display: none;
+  width: 100%;
+  height: 100%;
+  max-height: 50vh;
+  align-items: flex-end;
+}
+
+[carousel] [card] {
+  scroll-snap-align: center;
+  width: 40%;
+  max-width: 50vh;
+  height: auto;
+  flex: 0 0 auto;
+  max-height: 100%;
+}
+
+[carousel] [card] [card-content] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

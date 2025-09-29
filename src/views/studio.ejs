@@ -1,4 +1,15 @@
-<% main = include("templates/hero", {
+<% main = include("templates/carousel", { card_list: [
+  `<img src="https://titanium-studio.github.io/src/webp/keyboard.webp" alt="">`,
+  `<img src="https://titanium-studio.github.io/src/webp/3.webp" alt="">`,
+  `<img src="https://titanium-studio.github.io/src/webp/1.webp" alt="">`,
+  `<img src="https://titanium-studio.github.io/src/webp/city.webp" alt="">`,
+  `<img src="https://titanium-studio.github.io/src/webp/badocean.webp" alt="">`,
+  `<img src="https://titanium-studio.github.io/src/webp/2.webp" alt="">`,
+  `<img src="https://titanium-studio.github.io/src/webp/4.webp" alt="">`,
+  `<img src="https://titanium-studio.github.io/src/webp/blur1.webp" alt="">`,
+]}) %>
+
+<% main += include("templates/hero", {
   hero_name: "Studio",
   hero_desc: "Aset Telmanov"
 }) %>
@@ -37,20 +48,20 @@ section_content: `
 include("templates/titled-section", {
 section_title: `<h1>Works <br /> Overview</h1>`,
 section_content: include("templates/container-2x2", {
-box1: include("templates/card",{
-  card_content: `<img card src="" alt="">`,
+box1: include("templates/card", {
+  card_content: `<img src="" alt="">`,
   card_name: "Project1"
 }),
-box2: include("templates/card",{
-  card_content: `<img card src="" alt="">`,
+box2: include("templates/card", {
+  card_content: `<img src="" alt="">`,
   card_name: "Project2"
 }),
-box3: include("templates/card",{
-  card_content: `<img card src="" alt="">`,
+box3: include("templates/card", {
+  card_content: `<img src="" alt="">`,
   card_name: "Project3"
 }),
-box4: include("templates/card",{
-  card_content: `<img card src="" alt="">`,
+box4: include("templates/card", {
+  card_content: `<img src="" alt="">`,
   card_name: "Project4"
 })
 })
@@ -58,28 +69,28 @@ box4: include("templates/card",{
 
 <%-
 include("templates/container-3x2", {
-box1: include("templates/card",{
-  card_content: `<img card src="" alt="">`,
+box1: include("templates/card", {
+  card_content: `<img src="" alt="">`,
   card_name: "Project1"
 }),
-box2: include("templates/card",{
-  card_content: `<img card src="" alt="">`,
+box2: include("templates/card", {
+  card_content: `<img src="" alt="">`,
   card_name: "Project2"
 }),
-box3: include("templates/card",{
-  card_content: `<img card src="" alt="">`,
+box3: include("templates/card", {
+  card_content: `<img src="" alt="">`,
   card_name: "Project3"
 }),
-box4: include("templates/card",{
-  card_content: `<img card src="" alt="">`,
+box4: include("templates/card", {
+  card_content: `<img src="" alt="">`,
   card_name: "Project4"
 }),
-box5: include("templates/card",{
-  card_content: `<img card src="" alt="">`,
+box5: include("templates/card", {
+  card_content: `<img src="" alt="">`,
   card_name: "Project5"
 }),
-box6: include("templates/card",{
-  card_content: `<img card src="" alt="">`,
+box6: include("templates/card", {
+  card_content: `<img src="" alt="">`,
   card_name: "Project6"
 }),
 }) %>
