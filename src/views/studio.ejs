@@ -1,15 +1,4 @@
-<% main = include("templates/carousel", { card_list: [
-  `<img src="https://titanium-studio.github.io/src/webp/keyboard.webp" alt="">`,
-  `<img src="https://titanium-studio.github.io/src/webp/3.webp" alt="">`,
-  `<img src="https://titanium-studio.github.io/src/webp/1.webp" alt="">`,
-  `<img src="https://titanium-studio.github.io/src/webp/city.webp" alt="">`,
-  `<img src="https://titanium-studio.github.io/src/webp/badocean.webp" alt="">`,
-  `<img src="https://titanium-studio.github.io/src/webp/2.webp" alt="">`,
-  `<img src="https://titanium-studio.github.io/src/webp/4.webp" alt="">`,
-  `<img src="https://titanium-studio.github.io/src/webp/blur1.webp" alt="">`,
-]}) %>
-
-<% main += include("templates/hero", {
+<% main = include("templates/hero", {
   hero_name: "Studio",
   hero_desc: "Aset Telmanov"
 }) %>
@@ -66,6 +55,17 @@ box4: include("templates/card", {
 })
 })
 }) %>
+
+<%- include("templates/carousel", { card_list: [
+  `<img src="https://titanium-studio.github.io/src/webp/keyboard.webp" alt="">`,
+  `<img src="https://titanium-studio.github.io/src/webp/3.webp" alt="">`,
+  `<img src="https://titanium-studio.github.io/src/webp/1.webp" alt="">`,
+  `<img src="https://titanium-studio.github.io/src/webp/city.webp" alt="">`,
+  `<img src="https://titanium-studio.github.io/src/webp/badocean.webp" alt="">`,
+  `<img src="https://titanium-studio.github.io/src/webp/2.webp" alt="">`,
+  `<img src="https://titanium-studio.github.io/src/webp/4.webp" alt="">`,
+  `<img src="https://titanium-studio.github.io/src/webp/blur1.webp" alt="">`,
+]}) %>
 
 <%-
 include("templates/container-3x2", {

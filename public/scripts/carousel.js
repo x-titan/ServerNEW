@@ -16,6 +16,16 @@ function carouselInit(carousel) {
   console.log("offsetWidth: ", carousel_scroll_x.offsetWidth)
   console.log("clientWidth: ", carousel_scroll_x.clientWidth)
   console.log("scrollWidth: ", carousel_scroll_x.scrollWidth)
+
+  /** @type {HTMLDivElement[]} */
+  const cardList = carousel_scroll_x.querySelectorAll("[card]")
+
+  cardList.forEach((card) => {
+    card.addEventListener("click", (e) => {
+      card.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" })
+    })
+  })
+
   carousel.addEventListener("mousemove", (e) => {
     var pad = 32
     var rect = carousel.getBoundingClientRect()
