@@ -123,6 +123,10 @@ a:hover {
   position: relative;
   overflow-y: visible;
   overflow-x: unset;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 body>section,
@@ -132,12 +136,12 @@ body>[section] {
   padding-right: 0.5em;
 }
 
-body>*:not(#app, header) {
+body>* {
   padding-top: 1em;
   padding-bottom: 1em;
 }
 
-body[bottom-header]>*:not(#app, header) {
+body[bottom-header]>*:not(header) {
   padding-bottom: 48px;
 }
 
@@ -149,7 +153,7 @@ body #app>[section] {
   padding-right: 0.5em;
 }
 
-#app>*{
+#app>* {
   padding-top: 48px;
   padding-bottom: 0.5em;
 }
@@ -182,6 +186,10 @@ header {
   mix-blend-mode: difference;
   background-color: #fff;
   z-index: 99;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 [header-section] {

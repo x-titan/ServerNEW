@@ -1,7 +1,7 @@
-import type { RouterContext } from "@koa/router"
+import type { RouterContext, Middleware } from "@koa/router"
 import * as urlsService from "../services/urls.service"
 
-export async function createShortURL(ctx: RouterContext) {
+export const createShortURL: Middleware = async (ctx: RouterContext) => {
   const { url, url_id } = ctx.request.body as any
 
   ctx.body = await urlsService.createShortURL(
@@ -11,11 +11,11 @@ export async function createShortURL(ctx: RouterContext) {
   )
 }
 
-export async function resolveURL(ctx: RouterContext) {
+export const resolveURL: Middleware = async (ctx: RouterContext) => {
   ctx.body = "Resolve URL with ID: " + ctx.query.id
 }
 
-export async function updateURL(ctx: RouterContext) {
+export const updateURL: Middleware = async (ctx: RouterContext) => {
   const { url, url_id } = ctx.request.body as any
 
   ctx.body = await urlsService.updateURL(
@@ -25,7 +25,7 @@ export async function updateURL(ctx: RouterContext) {
   )
 }
 
-export async function deleteURL(ctx: RouterContext) {
+export const deleteURL: Middleware = async (ctx: RouterContext) => {
   const { url_id } = ctx.request.body as any
 
   ctx.body = await urlsService.deleteURL(
@@ -34,7 +34,7 @@ export async function deleteURL(ctx: RouterContext) {
   )
 }
 
-export async function getURLS(ctx: RouterContext) {
+export const getURLS: Middleware = async (ctx: RouterContext) => {
   const { limit = 10, offset = 0 } = ctx.request.body as any
 
   ctx.body = await urlsService.getURLS(

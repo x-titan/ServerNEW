@@ -1,13 +1,25 @@
 import Router from "@koa/router"
-import auth from "./auth.router"
-import urls from "./urls.router"
-import visits from "./visits.router"
-import health from "./health.router"
-import hello from "./hello.router"
-import studio from "./studio.router"
+import auth from "./auth.routes"
+import urls from "./urls.routes"
+import visits from "./visits.routes"
+import share from "./share.routes"
+import health from "./health.routes"
+import hello from "./hello.routes"
+import studio from "./studio.routes"
 import requireAuth from "../middleware/requireAuth"
+import useRouter from "../utils/useRouter"
 
 const router = new Router()
+
+const use = useRouter(router)
+
+// use("/studio", studio)
+// use("/auth", auth)
+// use("/urls", urls)
+// use("/visits", visits)
+// use("/health", health)
+// use("/share", share)
+// use("/hello", hello)
 
 router
   .use(
@@ -35,6 +47,11 @@ router
     "/health",
     health.routes(),
     health.allowedMethods()
+  )
+  .use(
+    "/share",
+    share.routes(),
+    share.allowedMethods()
   )
   .use(
     "/hello",

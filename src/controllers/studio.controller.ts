@@ -1,5 +1,5 @@
-import type { RouterContext } from "@koa/router"
+import type { RouterContext, Middleware } from "@koa/router"
 
-export async function index(ctx: RouterContext) {
+export const index: Middleware = async (ctx: RouterContext) => {
   await ctx.render("studio", { title: "Studio" })
 }

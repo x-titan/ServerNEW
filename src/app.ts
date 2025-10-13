@@ -7,8 +7,26 @@ import serve from "koa-static"
 import logger from "koa-logger"
 import path from "path"
 import koaEjs from "koa-ejs"
+import koaBody from "koa-body"
 
 const app = new Koa()
+
+const helmetOptions = {
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: [
+        "'self'",
+        "https://x-titan.github.io",
+        "https://titanium-studio.github.io",
+      ],
+      imgSrc: [
+        "'self'",
+        "https://titanium-studio.github.io",
+      ],
+    },
+  },
+}
 
 koaEjs(app, {
   root: path.join(__dirname, "/views"),
@@ -19,23 +37,15 @@ koaEjs(app, {
 app
   .use(logger())
   .use(cors())
-  .use(helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: [
-          "'self'",
-           "https://x-titan.github.io",
-           "https://titanium-studio.github.io",
-          ],
-        imgSrc:[
-          "'self'",
-           "https://titanium-studio.github.io",
-        ],
-      },
+  .use(helmet(helmetOptions))
+  .use(koaBody({
+    multipart: true,
+    formidable: {
+      uploadDir: "./temp",
+      keepExtensions: true,
     },
   }))
-  .use(bodyParser())
+  // .use(bodyParser())
   .use(router.routes())
   .use(router.allowedMethods())
   .use(serve(
@@ -43,6 +53,7 @@ app
   ))
   .use(async (ctx, next) => {
     ctx.status = 404
+    console.log(ctx.request.URL)
 
     await ctx.render('404', {
       title: "Error: " + ctx.status,
