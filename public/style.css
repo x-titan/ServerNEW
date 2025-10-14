@@ -14,6 +14,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 ::-webkit-scrollbar-corner {
@@ -51,9 +52,6 @@ body {
   position: relative;
   height: 100%;
   width: 100%;
-  /* display: flex; */
-  flex-direction: column;
-  height: 100%;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   overflow-y: scroll;
@@ -106,31 +104,58 @@ h6 {
   font-size: 1.1em;
 }
 
-#app {
-  height: 100%;
-  /* max-height: calc(100% - 32px); */
-  position: relative;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-body>*:not(#app, header) {
+#app a {
+  text-decoration: underline;
+
+}
+
+a:hover {
+  color: rgb(211, 38, 38);
+}
+
+#app {
+  height: 100%;
+  position: relative;
+  overflow-y: visible;
+  overflow-x: unset;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+body>section,
+body>[section] {
   scroll-snap-align: end;
   padding-left: 0.5em;
   padding-right: 0.5em;
+}
+
+body>* {
   padding-top: 1em;
   padding-bottom: 1em;
 }
 
-body[bottom-header]>*:not(#app, header) {
+body[bottom-header]>*:not(header) {
   padding-bottom: 48px;
 }
 
-body #app>* {
+body #app>section,
+body #app>[section] {
   /* scroll-margin-top: 32px; */
   scroll-snap-align: start;
   padding-left: 0.5em;
   padding-right: 0.5em;
+}
+
+#app>* {
   padding-top: 48px;
-  padding-bottom: 0.5%;
+  padding-bottom: 0.5em;
 }
 
 #app>:not(footer) {
@@ -159,10 +184,20 @@ header {
   height: 32px;
   overflow: hidden;
   mix-blend-mode: difference;
-  color: #fff;
+  background-color: #fff;
   z-index: 99;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+[header-section] {
   padding-left: 0.5em;
   padding-right: 0.5em;
+  mix-blend-mode: difference;
+  background-color: #fff;
+  color: #000;
 }
 
 [header-grid] {
@@ -417,11 +452,12 @@ footer {
   }
 }
 
-/** CONTAINER BOX IMAGE */
+/** IMAGE */
 
-[container-box] img {
+img {
+  height: 100%;
+  width: 100%;
   display: block;
-  flex: 1;
   object-fit: cover;
 }
 
@@ -463,4 +499,46 @@ footer {
   color: #495057;
   /* white-space: pre-wrap;  */
   /* word-break: break-word;  */
+}
+
+/** CAROUSEL */
+
+[carousel] {
+  height: 100%;
+  max-height: 100%;
+}
+
+[carousel] [carousel-scroll-x][flex] {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  align-self: flex-end;
+  --scrollbar-display: none;
+  width: 100%;
+  height: 100%;
+  align-items: flex-end;
+}
+
+[carousel-scroll-x]>[card] {
+  scroll-snap-align: center;
+  width: calc(50vw - 0.5em - var(--scrollbar-size));
+  /* max-width: 50vh; */
+  height: 50vh;
+  flex: 0 0 auto;
+  max-height: 100%;
+}
+
+[carousel] [card]:first-child {
+  margin-left: 30%;
+}
+
+[carousel] [card]:last-child {
+  margin-right: 30%;
+}
+
+[carousel] [card] [card-content] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

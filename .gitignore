@@ -37,3 +37,7 @@ Thumbs.db
 # Optional cache
 .cache/
 .eslintcache
+
+# Others
+uploads/
+temp/
