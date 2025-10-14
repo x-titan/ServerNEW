@@ -1,6 +1,6 @@
-import knex from "../config/knex"
-import type Url from "../types/url"
-import firstRow from "../utils/firstrow";
+import knex from "../../config/knex"
+import type Url from "../../types/url"
+import firstRow from "../../utils/firstrow"
 
 export async function createUrl(
   url: string,

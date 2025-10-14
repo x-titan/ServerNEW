@@ -1,6 +1,5 @@
 import type { Middleware, RouterContext } from "@koa/router"
 import type { Files } from "formidable"
-import PersistentFile from "formidable/PersistentFile";
 import fs from "fs"
 import path from "path"
 

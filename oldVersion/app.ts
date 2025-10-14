@@ -1,13 +1,13 @@
-import Koa, { Context } from "koa"
+import path from "path"
+import Koa from "koa"
 import cors from "@koa/cors"
 import helmet from "koa-helmet"
-import bodyParser from "koa-bodyparser"
-import router from "./routes/router"
 import serve from "koa-static"
 import logger from "koa-logger"
-import path from "path"
-import koaEjs from "koa-ejs"
 import koaBody from "koa-body"
+import koaEjs from "koa-ejs"
+import router from "./routes/router"
+import type { Context } from "koa"
 
 const app = new Koa()
 
@@ -45,7 +45,6 @@ app
       keepExtensions: true,
     },
   }))
-  // .use(bodyParser())
   .use(router.routes())
   .use(router.allowedMethods())
   .use(serve(
@@ -53,7 +52,8 @@ app
   ))
   .use(async (ctx, next) => {
     ctx.status = 404
-    console.log(ctx.request.URL)
+    console.log("error", ctx.URL.href)
+    // console.log(router)
 
     await ctx.render('404', {
       title: "Error: " + ctx.status,
