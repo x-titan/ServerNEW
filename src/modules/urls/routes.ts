@@ -1,7 +1,8 @@
 import Router from "@koa/router"
 import * as urlsController from "./controller"
+import type { AuthState, Context, State } from "../../core/types"
 
-const router = new Router()
+const router = new Router<AuthState, Context>()
 
 router
   .post("/", urlsController.createShortURL)
@@ -9,4 +10,6 @@ router
   .get("/get/:code", urlsController.resolveURL)
   .post("/all", urlsController.getURLS)
 
-export default router
+const urlsRoutes = router as Router<State, Context>
+
+export default urlsRoutes

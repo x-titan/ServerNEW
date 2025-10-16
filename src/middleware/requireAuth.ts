@@ -1,13 +1,6 @@
-import type { RouterContext } from "@koa/router"
-import type { Next } from "koa"
 import httpAssert from "http-assert"
 import { validateJWT } from "../config/jwt"
-
-function getAuthHeader(ctx: RouterContext) {
-  const authHeader = ctx.get("authorization")
-  httpAssert(authHeader, 401, "Please provide Authorization header")
-  return authHeader
-}
+import type { Middleware } from "../core/types"
 
 function verifyToken(authHeader: string) {
   const token = authHeader.split(" ")[1]
@@ -19,11 +12,14 @@ function verifyToken(authHeader: string) {
   return payload
 }
 
-export default function requireAuth() {
-  return async function (ctx: RouterContext, next: Next) {
-    const authHeader = getAuthHeader(ctx)
+export default function requireAuth(): Middleware {
+  return async function (ctx, next) {
+    const authHeader = ctx.get("authorization")
+
+    httpAssert(authHeader, 401, "Please provide Authorization header")
+
     const payload = verifyToken(authHeader)
-    ctx.state.user_id = payload.id
+    ctx.state.user = { id: payload.id }
 
     await next()
   }

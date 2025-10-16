@@ -1,10 +1,10 @@
-import type { RouterContext, Middleware } from "@koa/router"
 import * as urlsService from "./service"
 import { validateURL, validateUrlId } from "./validate"
 import httpAssert from "http-assert"
 import { isString, isUInt } from "../../utils/types"
+import type { AuthMiddleware } from "../../core/types"
 
-export const createShortURL: Middleware = async (ctx: RouterContext) => {
+export const createShortURL: AuthMiddleware = async (ctx) => {
   const body = ctx.request.body
   httpAssert(body, 400, "Request body is required")
 
@@ -17,7 +17,7 @@ export const createShortURL: Middleware = async (ctx: RouterContext) => {
 
   var result = await urlsService.createShortURL(
     url,
-    ctx.state.user_id,
+    ctx.state.user.id,
     url_id
   )
 
@@ -29,7 +29,7 @@ export const createShortURL: Middleware = async (ctx: RouterContext) => {
   }
 }
 
-export const resolveURL: Middleware = async (ctx: RouterContext) => {
+export const resolveURL: AuthMiddleware = async (ctx) => {
   const { id } = ctx.params as { id: string }
 
   httpAssert(id, 400, "URL ID is required")
@@ -40,7 +40,7 @@ export const resolveURL: Middleware = async (ctx: RouterContext) => {
   ctx.redirect(result)
 }
 
-export const updateURL: Middleware = async (ctx: RouterContext) => {
+export const updateURL: AuthMiddleware = async (ctx) => {
   const body = ctx.request.body
   httpAssert(body, 400, "Request body is required")
 
@@ -54,7 +54,7 @@ export const updateURL: Middleware = async (ctx: RouterContext) => {
   const result = await urlsService.updateURL(
     url_id,
     url,
-    ctx.state.user_id
+    ctx.state.user.id
   )
 
   ctx.body = {
@@ -64,7 +64,7 @@ export const updateURL: Middleware = async (ctx: RouterContext) => {
   }
 }
 
-export const deleteURL: Middleware = async (ctx: RouterContext) => {
+export const deleteURL: AuthMiddleware = async (ctx) => {
   const body = ctx.request.body
   httpAssert(body, 400, "Request body is required")
 
@@ -72,7 +72,7 @@ export const deleteURL: Middleware = async (ctx: RouterContext) => {
 
   validateUrlId(url_id)
 
-  const result = await urlsService.deleteURL(url_id, ctx.state.user_id)
+  const result = await urlsService.deleteURL(url_id, ctx.state.user.id)
 
   ctx.body = {
     success: true,
@@ -80,7 +80,7 @@ export const deleteURL: Middleware = async (ctx: RouterContext) => {
   }
 }
 
-export const getURLS: Middleware = async (ctx: RouterContext) => {
+export const getURLS: AuthMiddleware = async (ctx) => {
 
   const limit = parseInt(ctx.query.limit as string) || 10
   const offset = parseInt(ctx.query.offset as string) || 0

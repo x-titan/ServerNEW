@@ -26,7 +26,6 @@ export async function createUser(
     }, ["username", "id"])
     .then(firstRow)
 }
-
 export async function deleteUser(id: number): Promise<number> {
   return knex("users")
     .where({ id })

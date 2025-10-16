@@ -1,9 +1,9 @@
-import type { RouterContext, Middleware } from "@koa/router"
 import * as authService from "./service"
 import { validateLoginInput, validateRegisterInput } from "./validate"
-import { AuthUser } from "../../types/user"
+import type { Middleware } from "../../core/types"
+import type { AuthUser } from "../../types/user"
 
-export const login: Middleware = async (ctx: RouterContext) => {
+export const login: Middleware = async (ctx) => {
   const body = ctx.request.body
   validateLoginInput(body)
 
@@ -18,7 +18,7 @@ export const login: Middleware = async (ctx: RouterContext) => {
   }
 }
 
-export const register: Middleware = async (ctx: RouterContext) => {
+export const register: Middleware = async (ctx) => {
   const body = ctx.request.body
   validateRegisterInput(body)
 

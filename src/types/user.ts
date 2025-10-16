@@ -6,12 +6,8 @@ export default interface User {
   updated_at: Date
 }
 
-export interface PublicUser {
-  id: number
-  username: string
-}
+export interface PublicUser
+  extends Omit<User, "password" | "created_at" | "updated_at"> { }
 
-export interface AuthUser {
-  username: string
-  password: string
-}
+export interface AuthUser
+  extends Omit<User, "id" | "created_at" | "updated_at"> { }

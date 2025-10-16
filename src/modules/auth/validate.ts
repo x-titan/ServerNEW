@@ -27,7 +27,6 @@ export function validateRegisterInput(body: any) {
   httpAssert(body.username, 400, "Username is required")
   httpAssert(body.password, 400, "Password is required")
 
-
   const { username, password } = body
   validateUsername(username)
   validatePassword(password)

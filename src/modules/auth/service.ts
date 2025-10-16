@@ -19,7 +19,7 @@ export async function login(
     401, "Invalid password"
   )
 
-  return generateToken({ id: user.id })
+  return generateToken({ username, id: user.id })
 }
 
 export async function register(

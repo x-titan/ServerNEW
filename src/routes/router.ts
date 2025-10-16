@@ -7,8 +7,9 @@ import {
   visitsRoutes,
 } from "../modules"
 import requireAuth from "../middleware/requireAuth"
+import type { State, Context, Middleware } from "../core/types"
 
-const router = new Router()
+const router = new Router<State, Context>()
 
 router
   .use(

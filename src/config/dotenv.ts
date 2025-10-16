@@ -49,8 +49,8 @@ function validateProductionConfig(isProduction: boolean) {
       DB_USER,
       DB_HOST,
     })
-    .filter((_, value) => !value)
-    .map(([key]) => key)
+    .filter((_, value) => (!value))
+    .map(([key]) => (key))
 
   assert(
     missing.length === 0,
