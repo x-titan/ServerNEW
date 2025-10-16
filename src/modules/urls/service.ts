@@ -1,6 +1,5 @@
 import httpAssert from "http-assert"
 import * as UrlModel from "./model"
-import { validateUrl } from "../../utils/validate"
 
 export async function createShortURL(
   url: string,
@@ -14,8 +13,6 @@ export async function createShortURL(
       !(await UrlModel.findById(url_id)),
       409, "The ID that you provided already exists in our database"
     )
-
-  validateUrl(url)
 
   return UrlModel.createUrl(url, user_id, url_id)
 }
@@ -65,7 +62,7 @@ export async function deleteURL(url_id: string, user_id: number) {
     404, "URL not found or already deleted"
   )
 
-  return { message: "URL deleted successfully" }
+  return true
 }
 
 export async function getURLS(user_id: number, limit: number = 10, offset: number = 0) {

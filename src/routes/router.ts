@@ -18,7 +18,7 @@ router
   )
   .use(
     "/urls",
-    requireAuth,
+    requireAuth(),
     urlsRoutes.routes(),
     urlsRoutes.allowedMethods()
   )

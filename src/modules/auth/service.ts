@@ -2,7 +2,7 @@ import httpAssert from "http-assert"
 import { comparePassword, hashPassword } from "../../config/encryption"
 import { generateToken } from "../../config/jwt"
 import * as UsersModel from "../users/model"
-import { validatePassword, validateUsername } from "../../utils/validate"
+import { validatePassword, validateUsername } from "../users/validate"
 
 export async function login(
   username: string,

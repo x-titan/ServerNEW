@@ -10,3 +10,8 @@ export interface PublicUser {
   id: number
   username: string
 }
+
+export interface AuthUser {
+  username: string
+  password: string
+}

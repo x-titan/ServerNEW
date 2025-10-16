@@ -1,26 +1,35 @@
 import Knex from "knex"
+import config from "./dotenv"
 
 const {
-  DB_HOST,
-  DB_PORT,
-  DB_USER,
-  DB_PASSWORD,
-  DB_DATABASE,
-} = process.env
+  host,
+  port,
+  user,
+  password,
+  database,
+} = config.db
 
 const knex = Knex({
   client: "postgresql",
   connection: {
-    host: String(DB_HOST)!,
-    port: Number(DB_PORT),
-    user: String(DB_USER),
-    password: String(DB_PASSWORD),
-    database: String(DB_DATABASE),
+    host: host,
+    port: port,
+    user: user,
+    password: password,
+    database: database,
   },
   debug: false
 })
 
 export async function onDatabaseConnected() {
+  try {
+    await knex.raw("SELECT 1")
+    console.log("Database connection verified")
+  } catch (error) {
+    console.error("Database")
+    throw new Error(`Failed to connect to database: ${error}`)
+  }
+
   return knex.raw("SELECT 1")
 }
 

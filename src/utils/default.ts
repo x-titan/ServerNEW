@@ -1,3 +1,5 @@
+import { isObject, isString } from "./types"
+
 export function num(value: string | undefined, defaultValue: number): number {
   const n = Number(value);
   return Number.isFinite(n) ? n : defaultValue;
@@ -9,5 +11,22 @@ export function bool(value: string | undefined, defaultValue = false): boolean {
 }
 
 export function str(value: string | undefined, defaultValue: string): string {
-  return value?.trim() || defaultValue;
+  if (!isString(value))
+    return defaultValue
+
+  const trimmed = value.trim()
+  if (trimmed === "")
+    return defaultValue
+
+  return trimmed;
+}
+
+export function opts(value: object | undefined, defaultValue: object): object {
+  if (!isObject(value))
+    return { ...defaultValue }
+
+  return {
+    ...defaultValue,
+    ...value
+  }
 }

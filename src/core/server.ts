@@ -11,7 +11,7 @@ export default function createServer(options?: any) {
   const app = new Koa()
 
   app
-    .use(errorHandler)
+    .use(errorHandler())
     .use(helmet(helmetConfig))
     .use(cors())
     .use(logger())

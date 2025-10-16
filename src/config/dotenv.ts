@@ -1,5 +1,6 @@
 import "dotenv/config"
 import { num, str } from "../utils/default"
+import assert from "assert"
 
 const {
   NODE_ENV,
@@ -16,6 +17,8 @@ const {
 
 const config = {
   env: str(NODE_ENV, "development"),
+  isDevelopment: NODE_ENV === "development",
+  isProduction: NODE_ENV === "production",
 
   server: {
     port: num(PORT, 3000)
@@ -35,5 +38,30 @@ const config = {
     jwtExpiresIn: str(JWT_EXPIRES_IN, '1d'),
   },
 }
+
+function validateProductionConfig(isProduction: boolean) {
+  if (!isProduction) return
+
+  const missing = Object
+    .entries({
+      JWT_SECRET,
+      DB_PASSWORD,
+      DB_USER,
+      DB_HOST,
+    })
+    .filter((_, value) => !value)
+    .map(([key]) => key)
+
+  assert(
+    missing.length === 0,
+    `Missing required environment variables in production: ${missing.join(", ")}.\n`
+    + "Please set these variables in .env file or environment.")
+  assert(
+    JWT_SECRET && JWT_SECRET.length > 32,
+    "JWT_SECRET must be at least 32 characters long in producion. Current length: "
+    + (JWT_SECRET?.length || 0))
+}
+
+validateProductionConfig(config.isProduction)
 
 export default config
