@@ -1,4 +1,4 @@
-export default interface Visit {
+export interface VisitModel {
   id: number
   url_id: string
   ip: string

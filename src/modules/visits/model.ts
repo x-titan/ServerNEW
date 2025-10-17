@@ -1,24 +1,24 @@
 import knex from "../../config/knex"
-import type Visit from "../../types/visit"
 import firstRow from "../../utils/firstrow"
+import type { VisitModel } from "./types"
 
 export async function registerVisit(
   url_id: string,
   ip: string
-): Promise<Visit | undefined> {
+): Promise<VisitModel> {
   return knex("visits")
     .insert({
       url_id,
       ip,
     }, "*")
-    .then(firstRow)
+    .then(firstRow) as Promise<VisitModel>
 }
 
-export async function getVisitByURL(
+export async function getVisitListByURL(
   url_id: string,
   limit = 10,
   offset = 0
-): Promise<Visit[]> {
+): Promise<VisitModel[]> {
   return knex("visits")
     .where({ url_id })
     .limit(limit)

@@ -3,14 +3,13 @@ import { validateURL, validateUrlId } from "./validate"
 import httpAssert from "http-assert"
 import { isString, isUInt } from "../../utils/types"
 import type { AuthMiddleware } from "../../core/types"
+import type { UrlBody } from "./types"
 
 export const createShortURL: AuthMiddleware = async (ctx) => {
   const body = ctx.request.body
   httpAssert(body, 400, "Request body is required")
 
-  const { url, url_id } = body as {
-    url: string, url_id?: string
-  }
+  const { url, url_id } = body as UrlBody
 
   validateURL(url)
   validateUrlId(url_id)
@@ -30,7 +29,7 @@ export const createShortURL: AuthMiddleware = async (ctx) => {
 }
 
 export const resolveURL: AuthMiddleware = async (ctx) => {
-  const { id } = ctx.params as { id: string }
+  const { id } = ctx.params
 
   httpAssert(id, 400, "URL ID is required")
   httpAssert(isString(id), 400, "URL ID must be a string")
@@ -44,9 +43,7 @@ export const updateURL: AuthMiddleware = async (ctx) => {
   const body = ctx.request.body
   httpAssert(body, 400, "Request body is required")
 
-  const { url, url_id } = body as {
-    url_id: string, url: string
-  }
+  const { url, url_id } = body as UrlBody
 
   validateUrlId(url_id)
   validateURL(url)
@@ -68,20 +65,20 @@ export const deleteURL: AuthMiddleware = async (ctx) => {
   const body = ctx.request.body
   httpAssert(body, 400, "Request body is required")
 
-  const { url_id } = body as { url_id: string }
+  const { url_id } = body as UrlBody
 
   validateUrlId(url_id)
 
-  const result = await urlsService.deleteURL(url_id, ctx.state.user.id)
+  const result = await urlsService
+    .deleteURL(url_id, ctx.state.user.id)
 
   ctx.body = {
-    success: true,
+    success: result,
     message: "URL deleted successfully"
   }
 }
 
-export const getURLS: AuthMiddleware = async (ctx) => {
-
+export const getUrlList: AuthMiddleware = async (ctx) => {
   const limit = parseInt(ctx.query.limit as string) || 10
   const offset = parseInt(ctx.query.offset as string) || 0
 

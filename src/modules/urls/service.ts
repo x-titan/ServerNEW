@@ -1,5 +1,5 @@
 import httpAssert from "http-assert"
-import * as UrlModel from "./model"
+import * as UrlsModel from "./model"
 
 export async function createShortURL(
   url: string,
@@ -10,15 +10,15 @@ export async function createShortURL(
 
   if (url_id)
     httpAssert(
-      !(await UrlModel.findById(url_id)),
+      !(await UrlsModel.findById(url_id)),
       409, "The ID that you provided already exists in our database"
     )
 
-  return UrlModel.createUrl(url, user_id, url_id)
+  return UrlsModel.createUrl(url, user_id, url_id)
 }
 
 export async function resolveURL(id: string) {
-  var url = await UrlModel.findById(id)
+  var url = await UrlsModel.findById(id)
   httpAssert(url, 404, "URL not found")
 
   return url.url
@@ -30,8 +30,7 @@ export async function updateURL(
   user_id: number
 ) {
   httpAssert(url, 400, "URL is required")
-
-  const existingUrl = await UrlModel.findById(url_id)
+  const existingUrl = await UrlsModel.findById(url_id)
 
   httpAssert(
     existingUrl,
@@ -42,11 +41,11 @@ export async function updateURL(
     401, "You don't have permissions to update this URL"
   )
 
-  return UrlModel.updateUrl(url_id, url)
+  return UrlsModel.updateUrl(url_id, url)
 }
 
 export async function deleteURL(url_id: string, user_id: number) {
-  const existingUrl = await UrlModel.findById(url_id)
+  const existingUrl = await UrlsModel.findById(url_id)
 
   httpAssert(
     existingUrl,
@@ -56,18 +55,20 @@ export async function deleteURL(url_id: string, user_id: number) {
     existingUrl.user_id === user_id,
     401, "You don't have permissions to delete this URL"
   )
-
   httpAssert(
-    await UrlModel.deleteUrl(url_id) > 0,
+    await UrlsModel.deleteUrl(url_id) > 0,
     404, "URL not found or already deleted"
   )
 
   return true
 }
 
-export async function getURLS(user_id: number, limit: number = 10, offset: number = 0) {
-
-  return UrlModel.getUrls(user_id, limit, offset)
+export async function getURLS(
+  user_id: number,
+  limit: number = 10,
+  offset: number = 0
+) {
+  return UrlsModel.getUrls(user_id, limit, offset)
 
   // Enhanced version with visit counts
   // return knex("urls")

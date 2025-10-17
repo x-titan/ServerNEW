@@ -1,17 +1,10 @@
 import { onDatabaseConnected } from "../../config/knex"
 
 export async function checkDatabaseConnection() {
-  return (
+  try {
     await onDatabaseConnected()
-      ? { status: "ok" }
-      : { status: "error" }
-  )
-}
-
-export async function checkDatabaseHealth() {
-  return (
-    await onDatabaseConnected()
-      ? 200
-      : 500
-  )
+    return true
+  } catch (error) {
+    return false
+  }
 }

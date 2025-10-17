@@ -1,13 +1,13 @@
 import * as authService from "./service"
 import { validateLoginInput, validateRegisterInput } from "./validate"
 import type { Middleware } from "../../core/types"
-import type { AuthUser } from "../../types/user"
+import type { AuthUserModel } from "../users/types"
 
 export const login: Middleware = async (ctx) => {
   const body = ctx.request.body
   validateLoginInput(body)
 
-  const { username, password } = body as AuthUser
+  const { username, password } = body as AuthUserModel
   const token = await authService.login(username, password)
 
   ctx.status = 200
@@ -22,7 +22,7 @@ export const register: Middleware = async (ctx) => {
   const body = ctx.request.body
   validateRegisterInput(body)
 
-  const { username, password } = body as AuthUser
+  const { username, password } = body as AuthUserModel
   const result = await authService.register(username, password)
 
   ctx.status = 201

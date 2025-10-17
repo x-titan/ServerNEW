@@ -1,31 +1,25 @@
 import Router from "@koa/router"
-import type { Middleware } from "@koa/router"
+import type { Context, State } from "../core/types"
 import assert from "assert"
-import { is, isInstanceOf } from "xtitan-typeis"
+import { isInstanceOf, isString } from "xtitan-typeis"
 
-export default function useRouter(router: Router) {
+export default function useRouter(router: Router<State, Context>) {
   assert(
-    isInstanceOf(router, Router),
+    isInstanceOf(router, Router<State, Context>),
     "router must be instance from @koa/router")
 
   return function (
     urlPath: string,
-    subRouter: Router,
-    middleware?: Middleware[]
+    subRouter: Router<State, Context>
   ) {
-    assert(is.str(urlPath), "urlPath must be a string")
+    assert(isString(urlPath), "urlPath must be a string")
     assert(
-      isInstanceOf(subRouter, Router),
+      isInstanceOf(subRouter, Router<State, Context>),
       "subrRouter must be instance from @koa/router")
-
-    if (!is.arr(middleware))
-      middleware = []
 
     return router.use(
       urlPath,
-      ...middleware,
-      subRouter.routes() as unknown as Middleware,
-      subRouter.allowedMethods() as unknown as Middleware
+      subRouter.routes()
     )
   }
 }

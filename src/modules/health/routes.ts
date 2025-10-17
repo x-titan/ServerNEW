@@ -5,7 +5,6 @@ import type { State, Context } from "../../core/types"
 const healthRouter = new Router<State, Context>()
 
 healthRouter
-  .get("/", healthController.check)
-  .head("/", healthController.checkHead)
+  .post("/", healthController.check)
 
 export default healthRouter

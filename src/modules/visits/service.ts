@@ -1,9 +1,9 @@
 import httpAssert from "http-assert"
-import * as VisitModel from "./model"
+import * as VisitsModel from "./model"
 import * as UrlModel from "../urls/model"
 
 export async function registerVisit(url_id: string, ip: string) {
-  return VisitModel.registerVisit(url_id, ip)
+  return VisitsModel.registerVisit(url_id, ip)
 }
 
 export async function getLastVisit(
@@ -11,7 +11,7 @@ export async function getLastVisit(
   limit: number = 10,
   offset: number = 0
 ) {
-  return VisitModel.getVisitByURL(url_id, limit, offset)
+  return VisitsModel.getVisitListByURL(url_id, limit, offset)
 
   // Enhanced version with URL join
   // return knex("visits")
@@ -45,5 +45,5 @@ export async function getVisitByURL(
     401, "You don't have permissions to view visits for this URL"
   )
 
-  return VisitModel.getVisitByURL(url_id, limit, offset)
+  return VisitsModel.getVisitListByURL(url_id, limit, offset)
 }

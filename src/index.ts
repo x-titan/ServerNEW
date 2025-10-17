@@ -18,7 +18,7 @@ async function main(argv?: string[]) {
     layout: "layouts/index",
     viewExt: "ejs",
     cache: config.isProduction,
-    debug: config.isDevelopment,
+    // debug: config.isDevelopment,
   })
 
   app

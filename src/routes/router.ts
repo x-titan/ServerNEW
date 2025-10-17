@@ -7,36 +7,38 @@ import {
   visitsRoutes,
 } from "../modules"
 import requireAuth from "../middleware/requireAuth"
-import type { State, Context, Middleware } from "../core/types"
+import type { State, Context } from "../core/types"
+import useRouter from "../utils/useRouter"
 
 const router = new Router<State, Context>()
+const use = useRouter(router)
 
-router
-  .use(
-    "/auth",
-    authRoutes.routes(),
-    authRoutes.allowedMethods()
-  )
-  .use(
-    "/urls",
-    requireAuth(),
-    urlsRoutes.routes(),
-    urlsRoutes.allowedMethods()
-  )
-  .use(
-    "/visits",
-    visitsRoutes.routes(),
-    visitsRoutes.allowedMethods()
-  )
-  .use(
-    "/health",
-    healthRoutes.routes(),
-    healthRoutes.allowedMethods()
-  )
-  .use(
-    "/share",
-    shareRoutes.routes(),
-    shareRoutes.allowedMethods()
-  )
+use("/auth", authRoutes)
+use("/urls", urlsRoutes)
+use("/visits", visitsRoutes)
+use("/health", healthRoutes)
+use("/share", shareRoutes)
+// router
+//   .use(
+//     "/auth",
+//     authRoutes.routes()
+//   )
+//   .use(
+//     "/urls",
+//     requireAuth(),
+//     urlsRoutes.routes()
+//   )
+//   .use(
+//     "/visits",
+//     visitsRoutes.routes()
+//   )
+//   .use(
+//     "/health",
+//     healthRoutes.routes()
+//   )
+//   .use(
+//     "/share",
+//     shareRoutes.routes()
+//   )
 
 export default router

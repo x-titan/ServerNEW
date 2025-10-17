@@ -4,7 +4,7 @@ import { URL } from "url"
 
 const urlIdRegex = /^[a-zA-Z0-9_-]+$/
 
-export function validateURL(url: string): asserts url {
+export function validateURL(url?: string): asserts url {
   httpAssert(url, 400, "URL is required")
   httpAssert(isString(url), 400, "URL must be a string")
 
