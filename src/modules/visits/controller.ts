@@ -1,7 +1,7 @@
 import httpError from "http-errors"
 import * as visitsService from "./service"
-import type { Middleware } from "../../core/types"
+import type { IMiddleware } from "../../core/types"
 
-export const index: Middleware = async (ctx) => {
+export const index: IMiddleware = async (ctx) => {
   httpError.NotImplemented("Visits not implemented")
 }

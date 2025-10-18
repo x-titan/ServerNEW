@@ -1,4 +1,7 @@
-export interface UrlBody {
+import { IJSONResponse } from "../../core/types/response"
+import { IUrl } from "./model"
+
+export interface IUrlRequest {
   /**
    * Id for shorted url.
    * Example: `abc123` -> `https://example.com`
@@ -11,10 +14,10 @@ export interface UrlBody {
   url?: string
 }
 
-export interface UrlModel {
-  id: string
-  url: string
-  user_id: number
-  created_at: Date
-  updated_at: Date
+export interface IUrlResponse extends IJSONResponse {
+  data: IUrl
+}
+
+export interface IUrlListResponse extends IJSONResponse {
+  data: IUrl[]
 }

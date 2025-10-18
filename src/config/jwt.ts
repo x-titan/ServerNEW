@@ -8,25 +8,13 @@ import config from "./dotenv"
 import httpAssert from "http-assert"
 import { opts } from "../utils/default"
 import { isObject, isString } from "../utils/types"
+import type { IJWTPayload, IGenerateTokenOptions } from "./types/jwtConfig"
 
 const { jwtSecret, jwtExpiresIn } = config.security
 
-export interface JWTPayload {
-  id: number
-  username: string
-  iat?: number
-  exp?: number
-}
-
-export interface GenerateTokenOptions {
-  expiresIn?: string | number
-  audience?: string
-  issuer?: string
-}
-
 export function generateToken(
-  payload: Omit<JWTPayload, "iat" | "exp">,
-  options?: GenerateTokenOptions
+  payload: Omit<IJWTPayload, "iat" | "exp">,
+  options?: IGenerateTokenOptions
 ): string {
   httpAssert(payload.id, 500, "JWT payload must contain 'id' field")
 
@@ -43,7 +31,7 @@ export function generateToken(
   )
 }
 
-export function validateJWT(token: string): JWTPayload {
+export function validateJWT(token: string): IJWTPayload {
   try {
     const decoded = jwt.verify(token, jwtSecret, {
       issuer: "url-shortener-api",
@@ -51,7 +39,7 @@ export function validateJWT(token: string): JWTPayload {
     })
 
     httpAssert(!isString(decoded), 401, "Invalid token format")
-    return decoded as JWTPayload
+    return decoded as IJWTPayload
   } catch (error) {
     if (error instanceof TokenExpiredError)
       throw new httpError.Unauthorized("Token has expired")
@@ -72,12 +60,12 @@ export function validateJWT(token: string): JWTPayload {
   }
 }
 
-export function decodeToken(token: string): JWTPayload | null {
+export function decodeToken(token: string): IJWTPayload | null {
   try {
     const decoded = jwt.decode(token)
     if (isString(decoded) || !decoded)
       return null
-    return decoded as JWTPayload
+    return decoded as IJWTPayload
   } catch (error) {
     return null
   }

@@ -1,6 +1,7 @@
 import httpAssert from "http-assert"
 import { validateJWT } from "../config/jwt"
-import type { Middleware } from "../core/types"
+import type { IContext, IMiddleware } from "../core/types"
+import type { Next } from "koa"
 
 function verifyToken(authHeader: string) {
   const token = authHeader.split(" ")[1]
@@ -12,10 +13,9 @@ function verifyToken(authHeader: string) {
   return payload
 }
 
-export default function requireAuth(): Middleware {
+export default function requireAuth(): IMiddleware {
   return async function (ctx, next) {
     const authHeader = ctx.get("authorization")
-
     httpAssert(authHeader, 401, "Please provide Authorization header")
 
     const payload = verifyToken(authHeader)

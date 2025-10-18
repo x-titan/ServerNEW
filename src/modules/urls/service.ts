@@ -1,5 +1,5 @@
 import httpAssert from "http-assert"
-import * as UrlsModel from "./model"
+import * as UrlsModel from "./repository"
 
 export async function createShortURL(
   url: string,
@@ -18,7 +18,7 @@ export async function createShortURL(
 }
 
 export async function resolveURL(id: string) {
-  var url = await UrlsModel.findById(id)
+  const url = await UrlsModel.findById(id)
   httpAssert(url, 404, "URL not found")
 
   return url.url
@@ -55,15 +55,12 @@ export async function deleteURL(url_id: string, user_id: number) {
     existingUrl.user_id === user_id,
     401, "You don't have permissions to delete this URL"
   )
-  httpAssert(
-    await UrlsModel.deleteUrl(url_id) > 0,
-    404, "URL not found or already deleted"
-  )
+  const counts = await UrlsModel.deleteUrl(url_id)
 
-  return true
+  return counts > 0
 }
 
-export async function getURLS(
+export async function getURLs(
   user_id: number,
   limit: number = 10,
   offset: number = 0

@@ -1,8 +1,8 @@
 import Router from "@koa/router"
 import * as controller from "./controller"
-import type { State, Context } from "../../core/types"
+import type { IState, IContext } from "../../core/types"
 
-const router = new Router<State, Context>()
+const router = new Router<IState, IContext>()
 
 router
   .get("/", controller.index)

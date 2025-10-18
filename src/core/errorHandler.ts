@@ -1,22 +1,15 @@
 import type { Context, Next } from "koa"
 import config from "../config/dotenv"
+import { IMiddleware } from "./types"
+import { IErrorResponse } from "./types/response"
 
-interface ErrorResponse {
-  success: false
-  message: string
-  error?: string
-  stack?: string
-  path?: string
-  timestamp?: string
-}
-
-export default function errorHandler(options?: any) {
-  return async function (ctx: Context, next: Next) {
+export default function errorHandler(options?: any): IMiddleware {
+  return async function (ctx, next) {
     try {
       await next()
     } catch (error: any) {
       const status = error.status || 500
-      const response: ErrorResponse = {
+      const response: IErrorResponse = {
         success: false,
         message: error.message || "Internal Server Error",
       }

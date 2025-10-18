@@ -1,6 +1,6 @@
 import httpAssert from "http-assert"
-import * as VisitsModel from "./model"
-import * as UrlModel from "../urls/model"
+import * as VisitsModel from "./repository"
+import * as UrlModel from "../urls/repository"
 
 export async function registerVisit(url_id: string, ip: string) {
   return VisitsModel.registerVisit(url_id, ip)

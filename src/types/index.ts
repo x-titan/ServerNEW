@@ -1,11 +1,11 @@
-import { UserModel } from "../modules/users/types"
-import { UrlModel } from "../modules/urls/types"
-import { VisitModel } from "../modules/visits/types"
+import { IUser } from "../modules/users/model"
+import { IUrl } from "../modules/urls/model"
+import { IVisit } from "../modules/visits/model"
 
 declare module "knex/types/tables" {
   interface Tables {
-    users: UserModel
-    urls: UrlModel
-    visits: VisitModel
+    users: IUser
+    urls: IUrl
+    visits: IVisit
   }
 }

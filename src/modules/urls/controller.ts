@@ -2,19 +2,19 @@ import * as urlsService from "./service"
 import { validateURL, validateUrlId } from "./validate"
 import httpAssert from "http-assert"
 import { isString, isUInt } from "../../utils/types"
-import type { AuthMiddleware } from "../../core/types"
-import type { UrlBody } from "./types"
+import type { IAuthMiddleware } from "../../core/types"
+import type { IUrlListResponse, IUrlRequest, IUrlResponse } from "./types"
+import type { IJSONResponse } from "../../core/types/response"
 
-export const createShortURL: AuthMiddleware = async (ctx) => {
+export const createShortURL: IAuthMiddleware = async (ctx) => {
   const body = ctx.request.body
   httpAssert(body, 400, "Request body is required")
 
-  const { url, url_id } = body as UrlBody
-
+  const { url, url_id } = body as IUrlRequest
   validateURL(url)
   validateUrlId(url_id)
 
-  var result = await urlsService.createShortURL(
+  const result = await urlsService.createShortURL(
     url,
     ctx.state.user.id,
     url_id
@@ -23,28 +23,25 @@ export const createShortURL: AuthMiddleware = async (ctx) => {
   ctx.status = 201
   ctx.body = {
     success: true,
-    ...result,
+    data: result,
     message: "short URL created successfully"
-  }
+  } as IUrlResponse
 }
 
-export const resolveURL: AuthMiddleware = async (ctx) => {
+export const resolveURL: IAuthMiddleware = async (ctx) => {
   const { id } = ctx.params
-
   httpAssert(id, 400, "URL ID is required")
   httpAssert(isString(id), 400, "URL ID must be a string")
 
   const result = await urlsService.resolveURL(id)
-
   ctx.redirect(result)
 }
 
-export const updateURL: AuthMiddleware = async (ctx) => {
+export const updateURL: IAuthMiddleware = async (ctx) => {
   const body = ctx.request.body
   httpAssert(body, 400, "Request body is required")
 
-  const { url, url_id } = body as UrlBody
-
+  const { url, url_id } = body as IUrlRequest
   validateUrlId(url_id)
   validateURL(url)
 
@@ -56,17 +53,16 @@ export const updateURL: AuthMiddleware = async (ctx) => {
 
   ctx.body = {
     success: true,
-    ...result,
+    data: result,
     message: "URL updated successfully"
-  }
+  } as IUrlResponse
 }
 
-export const deleteURL: AuthMiddleware = async (ctx) => {
+export const deleteURL: IAuthMiddleware = async (ctx) => {
   const body = ctx.request.body
   httpAssert(body, 400, "Request body is required")
 
-  const { url_id } = body as UrlBody
-
+  const { url_id } = body as IUrlRequest
   validateUrlId(url_id)
 
   const result = await urlsService
@@ -74,11 +70,13 @@ export const deleteURL: AuthMiddleware = async (ctx) => {
 
   ctx.body = {
     success: result,
-    message: "URL deleted successfully"
-  }
+    message: (result
+      ? "URL deleted successfully"
+      : "URL not found"),
+  } as IJSONResponse
 }
 
-export const getUrlList: AuthMiddleware = async (ctx) => {
+export const getURLs: IAuthMiddleware = async (ctx) => {
   const limit = parseInt(ctx.query.limit as string) || 10
   const offset = parseInt(ctx.query.offset as string) || 0
 
@@ -91,14 +89,15 @@ export const getUrlList: AuthMiddleware = async (ctx) => {
     400, "Offset must be anon-negative"
   )
 
-  const result = await urlsService.getURLS(
-    ctx.state.user_id,
+  const result = await urlsService.getURLs(
+    ctx.state.user.id,
     limit,
     offset,
   )
 
   ctx.body = {
     success: true,
-    ...result
-  }
+    data: result,
+    message: "URLs retrievet successfully"
+  } as IUrlListResponse
 }

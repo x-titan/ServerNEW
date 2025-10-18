@@ -1,10 +1,10 @@
 import * as healthService from "./service"
-import type { Middleware } from "../../core/types"
+import type { IMiddleware } from "../../core/types"
 
-export const check: Middleware = async (ctx) => {
+export const check: IMiddleware = async (ctx) => {
   const response = {
-    status: "pass",
-    databaseStatus: await healthService.checkDatabaseConnection(),
+    success: true,
+    data: await healthService.checkDatabaseConnection(),
   }
 
   ctx.body = response

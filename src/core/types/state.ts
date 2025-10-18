@@ -1,12 +1,12 @@
 import type * as Koa from "koa"
 
-export interface State extends Koa.DefaultState {
+export interface IState extends Koa.DefaultState {
   user?: {
     id: number
   }
 }
 
-export interface AuthState extends State {
+export interface IAuthState extends IState {
   user: {
     id: number
   }
