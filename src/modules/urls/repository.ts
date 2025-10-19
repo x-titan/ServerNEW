@@ -1,37 +1,47 @@
 import knex from "../../config/knex"
 import firstRow from "../../utils/firstrow"
-import type { IUrl } from "./model"
+import {
+  UrlSchema,
+  type IUrl,
+} from "./model"
 
 export async function createUrl(
   url: string,
   userId: number,
   id?: string
 ): Promise<IUrl> {
-  return knex("urls")
-    .insert({
-      url,
-      user_id: userId,
-      id: id as any,
-    }, "*")
-    .then(firstRow) as Promise<IUrl>
+  return UrlSchema.parse(
+    await knex("urls")
+      .insert({
+        url,
+        user_id: userId,
+        id: id as any,
+      }, "*")
+      .then(firstRow))
 }
 
 export async function findById(
   id: string
 ): Promise<IUrl | undefined> {
-  return knex("urls")
+  const row = await knex("urls")
     .where({ id })
     .first()
+
+  if (!row) return undefined
+  return UrlSchema.parse(row)
 }
 
 export async function updateUrl(
   id: string,
   url: string
 ): Promise<IUrl | undefined> {
-  return knex("urls")
+  const row = await knex("urls")
     .where({ id })
     .update({ url }, "*")
     .then(firstRow)
+
+  if (!row) return undefined
+  return UrlSchema.parse(row)
 }
 
 export async function deleteUrl(
@@ -42,13 +52,17 @@ export async function deleteUrl(
     .delete()
 }
 
+const UrlSchemaArray = UrlSchema.array()
+
 export async function getUrls(
   user_id: number,
   limit: number = 10,
   offset: number = 0
 ): Promise<IUrl[]> {
-  return knex("urls")
-    .where({ user_id })
-    .limit(limit || 10)
-    .offset(offset || 0)
+  return UrlSchemaArray.parse(
+    await knex("urls")
+      .where({ user_id })
+      .limit(limit || 10)
+      .offset(offset || 0)
+  )
 }

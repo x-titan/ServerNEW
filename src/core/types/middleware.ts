@@ -2,8 +2,14 @@ import type * as Koa from "koa"
 import type {
   Middleware as RouterMiddleware,
 } from "@koa/router"
-import type { IState,IAuthState } from "./state"
-import type { IContext } from "./context"
+
+import type {
+  IState,
+  IAuthState,
+} from "./state"
+import type {
+  IContext,
+} from "./context"
 
 export type IMiddleware<
   StateT = Koa.DefaultState,

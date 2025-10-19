@@ -1,6 +1,7 @@
+import { createSafeObject } from "../utils"
 import type { IProxyConfig } from "./types/proxyConfig"
 
-const proxyConfig: IProxyConfig = {
+const proxyConfig: IProxyConfig = createSafeObject({
   auth: {
     path: "/auth",
     options: {
@@ -20,6 +21,6 @@ const proxyConfig: IProxyConfig = {
       rewrite: path => path.replace(/^\/urls/, "")
     }
   }
-}
+})
 
 export default proxyConfig

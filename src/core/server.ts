@@ -3,9 +3,10 @@ import cors from "@koa/cors"
 import helmet from "koa-helmet"
 import logger from "koa-logger"
 import koaBody from "koa-body"
+
 import helmetConfig from "../config/helmet"
 import koaBodyConfig from "../config/koaBody"
-import errorHandler from "./errorHandler"
+import errorHandler, { logError } from "./errorHandler"
 
 export default function createServer(options?: any) {
   const app = new Koa()
@@ -16,6 +17,7 @@ export default function createServer(options?: any) {
     .use(cors())
     .use(logger())
     .use(koaBody(koaBodyConfig))
+    .on("error", logError)
 
   return app
 }

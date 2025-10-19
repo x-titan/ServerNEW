@@ -1,7 +1,11 @@
 import httpAssert from "http-assert"
-import { validateJWT } from "../config/jwt"
-import type { IContext, IMiddleware } from "../core/types"
-import type { Next } from "koa"
+
+import {
+  validateJWT,
+} from "../config/jwt"
+import type {
+  IMiddleware,
+} from "../core/types"
 
 function verifyToken(authHeader: string) {
   const token = authHeader.split(" ")[1]

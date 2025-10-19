@@ -1,11 +1,11 @@
+import path from "path"
 import serve from "koa-static"
+import koaEjs from "koa-ejs"
 import config from "./config/dotenv"
 import { onDatabaseConnected } from "./config/knex"
 import createServer from "./core/server"
-import router from "./routes/router"
-import path from "path"
-import koaEjs from "koa-ejs"
 import setupGracefulShutdown from "./core/shutdown"
+import router from "./routes/router"
 
 async function main(argv?: string[]) {
   await onDatabaseConnected()

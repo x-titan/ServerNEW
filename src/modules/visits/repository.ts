@@ -1,27 +1,34 @@
 import knex from "../../config/knex"
 import firstRow from "../../utils/firstrow"
-import type { IVisit } from "./model"
+import {
+  VisitSchema,
+  type IVisit,
+} from "./model"
 
 export async function registerVisit(
   url_id: string,
   ip: string
 ): Promise<IVisit> {
-  return knex("visits")
-    .insert({
-      url_id,
-      ip,
-    }, "*")
-    .then(firstRow) as Promise<IVisit>
+  return VisitSchema.parse(
+    await knex("visits")
+      .insert({
+        url_id,
+        ip,
+      }, "*")
+      .then(firstRow))
 }
 
+const VisitSchemaArray = VisitSchema.array()
 export async function getVisitListByURL(
   url_id: string,
   limit = 10,
   offset = 0
 ): Promise<IVisit[]> {
-  return knex("visits")
-    .where({ url_id })
-    .limit(limit)
-    .offset(offset)
-    .orderBy("created_at", "desc")
+  return VisitSchemaArray.parse(
+    await knex("visits")
+      .where({ url_id })
+      .limit(limit)
+      .offset(offset)
+      .orderBy("created_at", "desc")
+  )
 }

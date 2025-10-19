@@ -1,6 +1,8 @@
-import type { IMiddleware } from "../../core/types"
 import fs from "fs"
 import path from "path"
+import type {
+  IMiddleware,
+} from "../../core/types"
 
 export const index: IMiddleware = async (ctx) => {
   await ctx.render("share", { title: "Share" })

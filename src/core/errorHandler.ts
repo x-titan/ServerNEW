@@ -1,7 +1,10 @@
-import type { Context, Next } from "koa"
 import config from "../config/dotenv"
-import { IMiddleware } from "./types"
-import { IErrorResponse } from "./types/response"
+
+import type {
+  IContext,
+  IMiddleware,
+  IErrorResponse,
+} from "./types"
 
 export default function errorHandler(options?: any): IMiddleware {
   return async function (ctx, next) {
@@ -51,7 +54,7 @@ export default function errorHandler(options?: any): IMiddleware {
   }
 }
 
-export function logError(error: Error, ctx?: Context) {
+export function logError(error: Error, ctx?: IContext) {
   if (!error || error.message === "Not Found")
     return
 

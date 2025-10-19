@@ -1,5 +1,5 @@
-import { isString } from "../../utils/types"
 import httpAssert from "http-assert"
+import { isString } from "../../utils"
 
 const usernameRegex = /^[a-zA-Z0-9_]{3,30}$/
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,100}$/

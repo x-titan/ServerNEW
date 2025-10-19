@@ -1,16 +1,30 @@
+import httpAssert from "http-assert"
+
 import * as urlsService from "./service"
 import { validateURL, validateUrlId } from "./validate"
-import httpAssert from "http-assert"
-import { isString, isUInt } from "../../utils/types"
-import type { IAuthMiddleware } from "../../core/types"
-import type { IUrlListResponse, IUrlRequest, IUrlResponse } from "./types"
-import type { IJSONResponse } from "../../core/types/response"
+
+import {
+  isString,
+  isUInt,
+  createSafeObject,
+} from "../../utils"
+
+import type {
+  IAuthMiddleware,
+  IJSONResponse,
+
+} from "../../core/types"
+import type {
+  IUrlListResponse,
+  IUrlRequest,
+  IUrlResponse,
+} from "./model"
 
 export const createShortURL: IAuthMiddleware = async (ctx) => {
-  const body = ctx.request.body
+  const body = createSafeObject(ctx.request.body as IUrlRequest)
   httpAssert(body, 400, "Request body is required")
 
-  const { url, url_id } = body as IUrlRequest
+  const { url, url_id } = body
   validateURL(url)
   validateUrlId(url_id)
 
@@ -38,7 +52,7 @@ export const resolveURL: IAuthMiddleware = async (ctx) => {
 }
 
 export const updateURL: IAuthMiddleware = async (ctx) => {
-  const body = ctx.request.body
+  const body = createSafeObject(ctx.request.body)
   httpAssert(body, 400, "Request body is required")
 
   const { url, url_id } = body as IUrlRequest
@@ -59,7 +73,7 @@ export const updateURL: IAuthMiddleware = async (ctx) => {
 }
 
 export const deleteURL: IAuthMiddleware = async (ctx) => {
-  const body = ctx.request.body
+  const body = createSafeObject(ctx.request.body)
   httpAssert(body, 400, "Request body is required")
 
   const { url_id } = body as IUrlRequest
@@ -98,6 +112,6 @@ export const getURLs: IAuthMiddleware = async (ctx) => {
   ctx.body = {
     success: true,
     data: result,
-    message: "URLs retrievet successfully"
+    message: "URLs retrieved successfully"
   } as IUrlListResponse
 }

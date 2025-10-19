@@ -1,6 +1,6 @@
-import "dotenv/config"
-import { num, str } from "../utils/default"
 import assert from "assert"
+import "dotenv/config"
+import { ensureNumber, ensureString } from "../utils/ensure"
 
 const {
   NODE_ENV,
@@ -16,26 +16,26 @@ const {
 } = process.env
 
 const config = {
-  env: str(NODE_ENV, "development"),
+  env: ensureString(NODE_ENV, "development"),
   isDevelopment: NODE_ENV === "development",
   isProduction: NODE_ENV === "production",
 
   server: {
-    port: num(PORT, 3000)
+    port: ensureNumber(PORT, 3000)
   },
 
   db: {
-    host: str(DB_HOST, 'localhost'),
-    port: num(DB_PORT, 5432),
-    user: str(DB_USER, 'postgres'),
-    password: str(DB_PASSWORD, ''),
-    database: str(DB_DATABASE, 'mydb'),
+    host: ensureString(DB_HOST, 'localhost'),
+    port: ensureNumber(DB_PORT, 5432),
+    user: ensureString(DB_USER, 'postgres'),
+    password: ensureString(DB_PASSWORD, ''),
+    database: ensureString(DB_DATABASE, 'mydb'),
   },
 
   security: {
-    passwordSaltRounds: num(PASSWORD_SALT_ROUNDS, 10),
-    jwtSecret: str(JWT_SECRET, 'default_jwt_secret'),
-    jwtExpiresIn: str(JWT_EXPIRES_IN, '1d'),
+    passwordSaltRounds: ensureNumber(PASSWORD_SALT_ROUNDS, 10),
+    jwtSecret: ensureString(JWT_SECRET, 'default_jwt_secret'),
+    jwtExpiresIn: ensureString(JWT_EXPIRES_IN, '1d'),
   },
 }
 
@@ -58,7 +58,7 @@ function validateProductionConfig(isProduction: boolean) {
     + "Please set these variables in .env file or environment.")
   assert(
     JWT_SECRET && JWT_SECRET.length > 32,
-    "JWT_SECRET must be at least 32 characters long in producion. Current length: "
+    "JWT_SECRET must be at least 32 characters long in production. Current length: "
     + (JWT_SECRET?.length || 0))
 }
 

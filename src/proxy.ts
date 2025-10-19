@@ -1,13 +1,12 @@
-import proxy from "koa-proxies"
+import KoaProxies from "koa-proxies"
 import createServer from "./core/server"
 import proxyConfig from "./config/proxy"
 import { IProxyConfig } from "./config/types/proxyConfig"
+import type Koa from "koa"
 
-function useProxy(config: IProxyConfig) {
+function setupProxy(app: Koa, config: IProxyConfig = proxyConfig) {
 
 }
 
 
-export default [
-
-]
+export default setupProxy

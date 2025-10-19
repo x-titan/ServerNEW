@@ -3,12 +3,17 @@ import jwt, {
   TokenExpiredError,
   JsonWebTokenError,
 } from "jsonwebtoken"
+import httpAssert from "http-assert"
 import httpError from "http-errors"
 import config from "./dotenv"
-import httpAssert from "http-assert"
-import { opts } from "../utils/default"
-import { isObject, isString } from "../utils/types"
-import type { IJWTPayload, IGenerateTokenOptions } from "./types/jwtConfig"
+import {
+  mergeOptions,
+  isString,
+} from "../utils"
+import type {
+  IJWTPayload,
+  IGenerateTokenOptions,
+} from "./types/jwtConfig"
 
 const { jwtSecret, jwtExpiresIn } = config.security
 
@@ -18,11 +23,11 @@ export function generateToken(
 ): string {
   httpAssert(payload.id, 500, "JWT payload must contain 'id' field")
 
-  const signOptions: SignOptions = opts(options, {
+  const signOptions: SignOptions = mergeOptions(options, {
     expiresIn: jwtExpiresIn,
-    issuer: "url-shortener-api",
-    audience: "url-shortener-client"
-  })
+    issuer: "Server",
+    audience: "Client"
+  } as SignOptions)
 
   return jwt.sign(
     payload,
@@ -34,8 +39,8 @@ export function generateToken(
 export function validateJWT(token: string): IJWTPayload {
   try {
     const decoded = jwt.verify(token, jwtSecret, {
-      issuer: "url-shortener-api",
-      audience: "url-shortener-client"
+      issuer: "Server",
+      audience: "Client"
     })
 
     httpAssert(!isString(decoded), 401, "Invalid token format")

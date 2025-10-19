@@ -1,3 +1,4 @@
+import type { StringValue } from "ms"
 
 export interface IJWTPayload {
   id: number;
@@ -7,7 +8,7 @@ export interface IJWTPayload {
 }
 
 export interface IGenerateTokenOptions {
-  expiresIn?: string | number;
+  expiresIn?: number | StringValue;
   audience?: string;
   issuer?: string;
 }

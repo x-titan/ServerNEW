@@ -1,13 +1,24 @@
+import {
+  LoginSchema,
+  RegisterSchema,
+  type ILoginUser,
+  type IRegisterUser,
+  type ILoginAuthResponse,
+  type IPublicAuthResponse,
+} from "./model"
+
 import * as authService from "./service"
-import { validateLoginInput, validateRegisterInput } from "./validate"
-import type { IMiddleware } from "../../core/types"
-import type { IAuthUserRequest, ILoginAuthResponse, IPublicAuthResponse } from "./types"
+import { createSafeObject } from "../../utils"
+
+import type {
+  IMiddleware,
+} from "../../core/types"
 
 export const login: IMiddleware = async (ctx) => {
-  const body = ctx.request.body
-  validateLoginInput(body)
+  const body = createSafeObject(ctx.request.body)
+  LoginSchema.parse(body)
 
-  const { username, password } = body as IAuthUserRequest
+  const { username, password } = body as ILoginUser
   const token = await authService.login(username, password)
 
   ctx.status = 200
@@ -20,9 +31,9 @@ export const login: IMiddleware = async (ctx) => {
 
 export const register: IMiddleware = async (ctx) => {
   const body = ctx.request.body
-  validateRegisterInput(body)
+  RegisterSchema.parse(body)
 
-  const { username, password } = body as IAuthUserRequest
+  const { username, password } = body as IRegisterUser
   const result = await authService.register(username, password)
 
   ctx.status = 201

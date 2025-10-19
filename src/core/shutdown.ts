@@ -1,5 +1,5 @@
-import { Server } from "http"
 import { closeDatabase } from "../config/knex"
+import type { Server } from "http"
 
 export default function setupGracefulShutdown(server: Server) {
   async function shutdown(signal: string) {

@@ -1,7 +1,12 @@
 import Router from "@koa/router"
 import requireAuth from "../../middleware/requireAuth"
 import * as urlsController from "./controller"
-import type { IAuthMiddleware, IAuthState, IContext, IMiddleware, IState } from "../../core/types"
+
+import type {
+  IAuthState,
+  IContext,
+  IState,
+} from "../../core/types"
 
 const router = new Router<IAuthState, IContext>()
 
