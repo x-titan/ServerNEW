@@ -1,4 +1,4 @@
-export { default as authRoutes } from "./auth/routes"
-export { default as urlsRoutes } from "./urls/routes"
-export { default as visitsRoutes } from "./visits/routes"
-export { default as healthRoutes } from "./health/routes"
+export { default as authRouter } from "./auth/routes"
+export { default as urlsRouter } from "./urls/routes"
+export { default as visitsRouter } from "./visits/routes"
+export { default as healthRouter } from "./health/routes"

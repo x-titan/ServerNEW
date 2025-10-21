@@ -1,14 +1,14 @@
 import fs from "fs"
 import path from "path"
 import type {
-  IMiddleware,
+  IRouterMiddleware,
 } from "../../core/types"
 
-export const index: IMiddleware = async (ctx) => {
+export const index: IRouterMiddleware = async (ctx) => {
   await ctx.render("share", { title: "Share" })
 }
 
-export const upload: IMiddleware = async (ctx) => {
+export const upload: IRouterMiddleware = async (ctx) => {
   if (ctx.request.files) {
     console.log(ctx.request.files)
     const uploadedFile = ctx.request.files.file as any
@@ -20,6 +20,6 @@ export const upload: IMiddleware = async (ctx) => {
   }
 }
 
-export const download: IMiddleware = async (ctx) => {
+export const download: IRouterMiddleware = async (ctx) => {
 
 }

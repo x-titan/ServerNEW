@@ -1,5 +1,6 @@
 import httpAssert from "http-assert"
 import * as UrlsModel from "./repository"
+import router from "./routes"
 
 export async function createShortURL(
   url: string,

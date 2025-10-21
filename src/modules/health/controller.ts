@@ -1,9 +1,9 @@
 import * as healthService from "./service"
 import type {
-  IMiddleware,
+  IRouterMiddleware,
 } from "../../core/types"
 
-export const check: IMiddleware = async (ctx) => {
+export const check: IRouterMiddleware = async (ctx) => {
   const success = await healthService.checkDatabaseConnection()
   const response = {
     success,

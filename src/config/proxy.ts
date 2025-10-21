@@ -1,7 +1,7 @@
-import { createSafeObject } from "../utils"
+import { safeObject } from "../utils"
 import type { IProxyConfig } from "./types/proxyConfig"
 
-const proxyConfig: IProxyConfig = createSafeObject({
+const proxyConfig: IProxyConfig = safeObject({
   auth: {
     path: "/auth",
     options: {

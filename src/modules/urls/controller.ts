@@ -6,7 +6,7 @@ import { validateURL, validateUrlId } from "./validate"
 import {
   isString,
   isUInt,
-  createSafeObject,
+  safeObject,
 } from "../../utils"
 
 import type {
@@ -21,7 +21,7 @@ import type {
 } from "./model"
 
 export const createShortURL: IAuthMiddleware = async (ctx) => {
-  const body = createSafeObject(ctx.request.body as IUrlRequest)
+  const body = safeObject(ctx.request.body as IUrlRequest)
   httpAssert(body, 400, "Request body is required")
 
   const { url, url_id } = body
@@ -52,7 +52,7 @@ export const resolveURL: IAuthMiddleware = async (ctx) => {
 }
 
 export const updateURL: IAuthMiddleware = async (ctx) => {
-  const body = createSafeObject(ctx.request.body)
+  const body = safeObject(ctx.request.body)
   httpAssert(body, 400, "Request body is required")
 
   const { url, url_id } = body as IUrlRequest
@@ -73,7 +73,7 @@ export const updateURL: IAuthMiddleware = async (ctx) => {
 }
 
 export const deleteURL: IAuthMiddleware = async (ctx) => {
-  const body = createSafeObject(ctx.request.body)
+  const body = safeObject(ctx.request.body)
   httpAssert(body, 400, "Request body is required")
 
   const { url_id } = body as IUrlRequest

@@ -1,6 +1,6 @@
 import { isObject } from "./types"
 
-export function createSafeObject<T = {}>(obj?: T): T {
+export function safeObject<T = {}>(obj?: T): T {
   return Object.assign(Object.create(null), obj)
 }
 

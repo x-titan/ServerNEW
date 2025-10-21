@@ -6,10 +6,10 @@ import type {
   IContext,
 } from "../../core/types"
 
-const router = new Router<IState, IContext>()
+const authRouter = new Router<IState, IContext>()
 
-router
+authRouter
   .post("/login", authController.login)
   .post("/register", authController.register)
 
-export default router
+export default authRouter

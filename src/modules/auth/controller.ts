@@ -8,20 +8,20 @@ import {
 } from "./model"
 
 import * as authService from "./service"
-import { createSafeObject } from "../../utils"
+import { safeObject } from "../../utils"
 
 import type {
-  IMiddleware,
+  IRouterMiddleware,
 } from "../../core/types"
 
-export const login: IMiddleware = async (ctx) => {
-  const body = createSafeObject(ctx.request.body)
+export const login: IRouterMiddleware = async (ctx) => {
+  const body = safeObject(ctx.request.body)
   LoginSchema.parse(body)
 
   const { username, password } = body as ILoginUser
   const token = await authService.login(username, password)
 
-  ctx.status = 200
+  // ctx.status = 200
   ctx.body = {
     success: true,
     token,
@@ -29,7 +29,7 @@ export const login: IMiddleware = async (ctx) => {
   } as ILoginAuthResponse
 }
 
-export const register: IMiddleware = async (ctx) => {
+export const register: IRouterMiddleware = async (ctx) => {
   const body = ctx.request.body
   RegisterSchema.parse(body)
 

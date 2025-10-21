@@ -8,7 +8,7 @@ import type {
   IState,
 } from "../../core/types"
 
-const router = new Router<IAuthState, IContext>()
+const router = new Router<IAuthState, IContext>();
 
 router
   .use(requireAuth())
@@ -18,6 +18,6 @@ router
   .put("/", urlsController.updateURL)
   .get("/get/:id", urlsController.resolveURL)
 
-const urlsRoutes = router as Router<IState, IContext>
+const urlsRouter = router as Router<IState, IContext>
 
-export default urlsRoutes
+export default urlsRouter

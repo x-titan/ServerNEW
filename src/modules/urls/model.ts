@@ -7,7 +7,7 @@ import {
 export const UrlSchema = z.object({
   id: z.string(),
   url: z.httpUrl(),
-  user_id: z.number(),
+  user_id: z.number("user_id parameter required"),
   created_at: z.date(),
   updated_at: z.date(),
 })

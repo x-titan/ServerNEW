@@ -10,7 +10,7 @@ It explains the structure of the source code, the purpose of each directory, and
 src/
 ├── config/ # Global configuration modules (dotenv, jwt, knex, etc.)
 ├── core/ # Core runtime logic (server, error handler, shutdown, base types)
-├── middleware/ # Custom reusable middlewares (e.g. authentication)
+├── middleware/ # Custom reusable middleware's (e.g. authentication)
 ├── modules/ # Main application features, grouped by domain
 ├── routes/ # Centralized router aggregator
 ├── services/ # Shared or secondary services (e.g. share routes)
@@ -70,13 +70,13 @@ Contains essential logic for the Koa server:
 - **server.ts** – Main Koa initialization, middleware mounting, router registration.
 - **errorHandler.ts** – Global try/catch wrapper for Koa.
 - **shutdown.ts** – Graceful shutdown handling.
-- **types/** – Context, middleware, and state typings shared across the app.
+- **types/** – Context, middleware, and state typing's shared across the app.
 
 ---
 
 ### `middleware/`
 
-Reusable middlewares that are not specific to a feature:
+Reusable middleware's that are not specific to a feature:
 
 - **requireAuth.ts** – JWT authentication guard for protected routes.
 
@@ -102,6 +102,7 @@ Each other module (auth, users, visits, health) follows the same structure.
 ### `routes/`
 
 - **router.ts** – Combines all module routers into a single application router.
+
   ```ts
   import Router from "@koa/router";
   import { router as auth } from "../modules/auth/routes";

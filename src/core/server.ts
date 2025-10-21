@@ -6,18 +6,20 @@ import koaBody from "koa-body"
 
 import helmetConfig from "../config/helmet"
 import koaBodyConfig from "../config/koaBody"
-import errorHandler, { logError } from "./errorHandler"
+import craeteErrorHandler, {
+  loggerError,
+} from "./error"
 
 export default function createServer(options?: any) {
   const app = new Koa()
 
   app
-    .use(errorHandler())
+    .use(craeteErrorHandler())
     .use(helmet(helmetConfig))
     .use(cors())
     .use(logger())
     .use(koaBody(koaBodyConfig))
-    .on("error", logError)
+    .on("error", loggerError)
 
   return app
 }

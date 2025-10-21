@@ -1,0 +1,18 @@
+import type {
+  IErrorListener,
+} from "../../types"
+
+const sendError: IErrorListener = (error, ctx) => {
+  if (!ctx.status || ctx.status === 404) 
+    ctx.status = error.status  ?? 500
+  
+  if (!ctx.body) ctx.body = {
+    success: false,
+    message: error.message, error: {
+      timestamp: new Date().toISOString(),
+      status: error.status
+    }
+  }
+}
+
+export default sendError
