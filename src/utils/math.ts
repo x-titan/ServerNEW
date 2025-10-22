@@ -45,7 +45,7 @@ export function clamp(min: number, value: number, max: number) {
  * minmax(4, value) // -> 4
  * minmax(5, value) // -> 5
  */
-export default function minmax(min: number, max: number): number {
+export function minmax(min: number, max: number): number {
   assert(isNumber(min), "Min value must be a number")
   assert(isNumber(max), "Max value must be a number")
 

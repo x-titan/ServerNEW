@@ -12,6 +12,7 @@ import {
 import type {
   IAuthMiddleware,
   IJSONResponse,
+  IRouterMiddleware,
 
 } from "../../core/types"
 import type {
@@ -20,10 +21,10 @@ import type {
   IUrlResponse,
 } from "./model"
 
-export const createShortURL: IAuthMiddleware = async (ctx) => {
+export const createShortURL: (IAuthMiddleware) = async (ctx) => {
   const body = safeObject(ctx.request.body as IUrlRequest)
   httpAssert(body, 400, "Request body is required")
-
+  ctx.params 
   const { url, url_id } = body
   validateURL(url)
   validateUrlId(url_id)

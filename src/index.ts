@@ -29,6 +29,7 @@ async function main(argv?: string[]) {
   const server = app.listen(config.server.port, () => {
     console.log(`Server is running on http://localhost:${config.server.port}`)
     console.log("Environment: " + config.env)
+    console.log("-".repeat(50))
   })
 
   setupGracefulShutdown(server)

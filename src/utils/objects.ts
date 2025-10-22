@@ -4,15 +4,15 @@ export function safeObject<T = {}>(obj?: T): T {
   return Object.assign(Object.create(null), obj)
 }
 
-export function mergeOptions<T extends object>(
-  value: unknown,
-  defaultValue: T
+export function resolveOptions<T extends object>(
+  defaults: T,
+  overrides?: Partial<T> | unknown
 ): T {
-  if (!isObject(value))
-    return { ...defaultValue }
+  if (!isObject(overrides))
+    return { ...defaults }
 
   return {
-    ...defaultValue,
-    ...value as Partial<T>
+    ...defaults,
+    ...overrides
   }
 }

@@ -4,8 +4,10 @@ import {
   validateJWT,
 } from "../config/jwt"
 import type {
+  IContext,
   IMiddleware,
 } from "../core/types"
+import type { Next } from "koa"
 
 function verifyToken(authHeader: string) {
   const token = authHeader.split(" ")[1]

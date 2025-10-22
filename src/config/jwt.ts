@@ -7,7 +7,7 @@ import httpAssert from "http-assert"
 import httpError from "http-errors"
 import config from "./dotenv"
 import {
-  mergeOptions,
+  resolveOptions,
   isString,
 } from "../utils"
 import type {
@@ -23,11 +23,14 @@ export function generateToken(
 ): string {
   httpAssert(payload.id, 500, "JWT payload must contain 'id' field")
 
-  const signOptions: SignOptions = mergeOptions(options, {
-    expiresIn: jwtExpiresIn,
-    issuer: "Server",
-    audience: "Client"
-  } as SignOptions)
+  const signOptions: SignOptions = resolveOptions(
+    {
+      expiresIn: jwtExpiresIn,
+      issuer: "Server",
+      audience: "Client"
+    } as SignOptions,
+    options
+  )
 
   return jwt.sign(
     payload,

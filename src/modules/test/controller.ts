@@ -1,5 +1,7 @@
-import { IRouterMiddleware } from "../../core/types"
 import z from "zod"
+import type {
+  IRouterMiddleware,
+} from "../../core/types"
 
 const someschema = z.object({
   data1: z.number()
