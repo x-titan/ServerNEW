@@ -1,5 +1,5 @@
 import httpAssert from "http-assert"
-import createHttpError, { HttpError } from "http-errors"
+import { HttpError } from "http-errors"
 
 import ensureErrorResponse from "./listeners/ensureErrorResponse"
 import toHttpError from "./toHttpError"
@@ -7,7 +7,6 @@ import toHttpError from "./toHttpError"
 import {
   resolveOptions,
   isFunction,
-  canSendResponse,
 } from "../../utils"
 
 import type {
@@ -15,6 +14,7 @@ import type {
   IErrorListener,
   IContext,
 } from "../types"
+import { throwNotFound } from "./listeners/throwNotFound"
 
 export interface IErrorHandlerOptions {
   onHttpError: IErrorListener
@@ -30,14 +30,6 @@ const safeInvokeHook = async (hook: IErrorListener, httpError: HttpError, ctx: I
   } catch (hookErr) {
     console.error("[onHttpError failed]", hookErr)
   }
-}
-
-const throwNotFound = (ctx: IContext) => {
-  if (canSendResponse(ctx))
-    throw createHttpError(
-      404,
-      `Route ${ctx.method} ${ctx.path} not found`
-    )
 }
 
 export default function createErrorHandler(options?: IErrorHandlerOptions): IMiddleware {

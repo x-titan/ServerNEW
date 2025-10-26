@@ -1,6 +1,3 @@
-import assert from "assert"
-import { isArray, isDefined } from "./types"
-
 export default function only<
   T extends object,
   K extends keyof T

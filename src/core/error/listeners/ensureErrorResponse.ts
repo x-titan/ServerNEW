@@ -1,5 +1,5 @@
 import {
-  isReponded,
+  isResponded,
 } from "../../../utils"
 
 import type {
@@ -7,7 +7,7 @@ import type {
 } from "../../types"
 
 const ensureErrorResponse: IErrorListener = async (error, ctx) => {
-  if (isReponded(ctx)) return
+  if (isResponded(ctx)) return
 
   if (!ctx.status || ctx.status === 404)
     ctx.status = error.status ?? 500
