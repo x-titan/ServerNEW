@@ -4,17 +4,16 @@ import createHttpError, {
   type HttpError,
 } from "http-errors"
 
+import isValidationError from "./validationError"
+
 import {
-  isValidationError,
-} from "./validationError"
+  isDefined,
+  isString,
+} from "../types"
 import {
   isPostgresError,
   mapPostgresError,
 } from "./postgresError"
-import {
-  isDefined,
-  isString,
-} from "../../utils"
 
 /**
  * Converts an error into an HTTP error.

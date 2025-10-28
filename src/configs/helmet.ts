@@ -1,6 +1,6 @@
 import type { HelmetOptions } from "helmet"
 
-const helmetConfig = {
+const helmetOptions = {
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
@@ -17,4 +17,4 @@ const helmetConfig = {
   },
 } as HelmetOptions
 
-export default helmetConfig
+export default helmetOptions

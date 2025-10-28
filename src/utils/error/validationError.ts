@@ -1,6 +1,6 @@
-import { isArray } from "../../utils"
+import { isArray } from "../types"
 
-export function isValidationError(error: any): boolean {
+export default function isValidationError(error: any): boolean {
   return (
     error?.name === "ValidationError" || // Yup
     error?.name === "ZodError" || // Zod

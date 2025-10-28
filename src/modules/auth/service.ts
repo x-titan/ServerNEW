@@ -3,8 +3,8 @@ import httpAssert from "http-assert"
 import {
   comparePassword,
   hashPassword,
-} from "../../config/encryption"
-import { generateToken } from "../../config/jwt"
+} from "../../configs/encryption"
+import { generateToken } from "../../configs/jwt"
 
 import * as UsersModel from "../users/repository"
 import {

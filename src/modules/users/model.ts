@@ -13,6 +13,16 @@ export const UserSchema = z.object({
   updated_at: z.date()
 })
 
+export const UserIMAPSchema = z.object({
+  id: z.number(),
+  email: z.email(),
+  imap_host: z.string(),
+  imap_port: z.number(),
+  imap_secure: z.boolean(),
+  imap_username: z.string(),
+  imap_password: z.string(),
+})
+
 /**
  * Public scheme
  * (without `password`, `created_at`, `updated_at`)
@@ -28,3 +38,5 @@ export type IUser = z.infer<typeof UserSchema>
  * `IPublicUser = { username, id }`
  */
 export type IPublicUser = z.infer<typeof PublicUserSchema>
+
+export type IUserIMAP = z.infer<typeof UserIMAPSchema>

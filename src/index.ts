@@ -1,8 +1,8 @@
 import path from "path"
 import serve from "koa-static"
 import koaEjs from "koa-ejs"
-import config from "./config/dotenv"
-import { onDatabaseConnected } from "./config/knex"
+import config from "./configs/dotenv"
+import { onDatabaseConnected } from "./configs/knex"
 import createServer from "./core/server"
 import setupGracefulShutdown from "./core/shutdown"
 import router from "./routes/router"
@@ -18,7 +18,7 @@ async function main(argv?: string[]) {
     layout: "layouts/index",
     viewExt: "ejs",
     cache: config.isProduction,
-    // debug: config.isDevelopment,
+    debug: false,
   })
 
   app

@@ -1,4 +1,4 @@
-import { onDatabaseConnected } from "../../config/knex"
+import { onDatabaseConnected } from "../../configs/knex"
 
 export async function checkDatabaseConnection() {
   try {

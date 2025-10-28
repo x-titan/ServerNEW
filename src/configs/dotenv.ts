@@ -1,6 +1,10 @@
-import assert from "assert"
 import "dotenv/config"
-import { ensureNumber, ensureString } from "../utils/ensure"
+import assert from "assert"
+
+import {
+  ensureNumber,
+  ensureString,
+} from "../utils/ensure"
 
 const {
   NODE_ENV,

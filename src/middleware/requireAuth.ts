@@ -2,7 +2,7 @@ import httpAssert from "http-assert"
 
 import {
   validateJWT,
-} from "../config/jwt"
+} from "../configs/jwt"
 import type {
   IContext,
   IMiddleware,

@@ -1,4 +1,4 @@
-import knex from "../../config/knex"
+import knex from "../../configs/knex"
 import firstRow from "../../utils/firstrow"
 import {
   UrlSchema,
