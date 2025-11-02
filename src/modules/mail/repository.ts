@@ -20,6 +20,19 @@ db.exec(`CREATE TABLE IF NOT EXISTS mails (
   FOREIGN KEY(owner_id) REFERENCES users(id)
 );`)
 
+function saveEmail(mail: any) {
+  db.prepare(`
+    INSERT INTO emails (sender, recipient, subject, text, date)
+    VALUES (?, ?, ?, ?, ?)
+  `).run(
+    mail.from.text,
+    mail.to.text,
+    mail.subject,
+    mail.text,
+    new Date().toISOString()
+  );
+}
+
 export function getMails(limit: number, offset: number) {
 
 }

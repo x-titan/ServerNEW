@@ -1,6 +1,5 @@
 import { SMTPServer } from "smtp-server"
 import { simpleParser } from "mailparser"
-
 const server = new SMTPServer({
   authOptional: true,
   onData(stream, session, callback) {

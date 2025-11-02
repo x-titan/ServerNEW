@@ -4,14 +4,16 @@ import Application from "koa"
 import helmet from "koa-helmet"
 import cors from "@koa/cors"
 import logger from "koa-logger"
-import error from "@xtitan/koa-error-handler"
 import body from "koa-body"
+import serve from "koa-static"
+import error from "@xtitan/koa-error-handler"
 
 // Options
-import helmetOptions from "../configs/helmet"
-import koaBodyOptions from "../configs/koaBody"
 import errorOptions from "../configs/error"
+import helmetOptions from "../configs/helmet"
 import corsOptions from "../configs/cors"
+import koaBodyOptions from "../configs/koaBody"
+import staticOptions from "../configs/static"
 
 export default function createServer(options?: any) {
   const app = new Application()
@@ -22,6 +24,10 @@ export default function createServer(options?: any) {
     .use(cors(corsOptions))
     .use(logger())
     .use(body(koaBodyOptions))
+    .use(serve(
+      staticOptions.root,
+      staticOptions.options
+    ))
 
   return app
 }
