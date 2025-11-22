@@ -1,9 +1,11 @@
 import assert from "assert"
-
 import {
   isDefined,
   isFunction,
   isNumber,
+} from "@x-titan/type-is"
+
+import {
   resolveOptions,
   noop,
 } from "../utils"

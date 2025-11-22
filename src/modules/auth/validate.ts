@@ -1,6 +1,6 @@
 import httpAssert from "http-assert"
 import { validatePassword, validateUsername } from "../users/validate"
-import { isString } from "../../utils/types"
+import { isString } from "@x-titan/type-is"
 
 export function validateLoginInput(body: any) {
   httpAssert(body, 400, "Request body is required")

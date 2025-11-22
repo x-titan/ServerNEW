@@ -1,19 +1,19 @@
 import httpAssert from "http-assert"
+import {
+  isString,
+  isUInt,
+} from"@x-titan/type-is"
 
 import * as urlsService from "./service"
 import { validateURL, validateUrlId } from "./validate"
 
 import {
-  isString,
-  isUInt,
   safeObject,
 } from "../../utils"
 
 import type {
   IAuthMiddleware,
   IJSONResponse,
-  IRouterMiddleware,
-
 } from "../../core/types"
 import type {
   IUrlListResponse,

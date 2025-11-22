@@ -1,5 +1,5 @@
 import httpAssert from "http-assert"
-import { isString } from "../../utils"
+import { isString } from "@x-titan/type-is"
 import { URL } from "url"
 
 const urlIdRegex = /^[a-zA-Z0-9_-]+$/

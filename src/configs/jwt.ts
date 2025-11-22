@@ -5,11 +5,15 @@ import jwt, {
 } from "jsonwebtoken"
 import httpAssert from "http-assert"
 import httpError from "http-errors"
+import {
+  isString,
+} from "@x-titan/type-is"
+
 import config from "./dotenv"
 import {
   resolveOptions,
-  isString,
 } from "../utils"
+
 import type {
   IJWTPayload,
   IGenerateTokenOptions,

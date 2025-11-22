@@ -6,7 +6,7 @@ import cors from "@koa/cors"
 import logger from "koa-logger"
 import body from "koa-body"
 import serve from "koa-static"
-import error from "@xtitan/koa-error-handler"
+import error from "@x-titan/koa-error-handler"
 
 // Options
 import errorOptions from "../configs/error"

@@ -5,7 +5,7 @@ import type { HttpError } from "http-errors"
 import type {
   ErrorHandlerOptions,
   ErrorResponse,
-} from "@xtitan/koa-error-handler"
+} from "@x-titan/koa-error-handler"
 
 const errorOptions: ErrorHandlerOptions = {
   debug: config.isDevelopment,
